@@ -12,4 +12,4 @@ page_alloc.shuffle=1
 rcupdate.rcu_expedited=1
 rootfstype=ext4,btrfs,xfs,f2fs
 tsc=reliable
-rw 
+rw

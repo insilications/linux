@@ -6,19 +6,57 @@
 
 Name:           linux
 Version:        5.12.13
-Release:        1050
+Release:        2222
 License:        GPL-2.0
 Summary:        The Linux kernel
 Url:            http://www.kernel.org/
 Group:          kernel
-Source0:        https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.12.13.tar.xz
+Source0:        file:///insilications/apps/linux-5.12.13.tar.gz
 Source1:        config
 Source2:        cmdline
 
-%define ktarget  native
+%define ktarget native
 %define kversion %{version}-%{release}.%{ktarget}
 
 BuildRequires:  buildreq-kernel
+BuildRequires:  bash
+BuildRequires:  bc
+BuildRequires:  binutils-dev
+BuildRequires:  binutils-staticdev
+BuildRequires:  elfutils
+BuildRequires:  elfutils-dev
+BuildRequires:  kmod
+BuildRequires:  make
+BuildRequires:  openssl
+BuildRequires:  openssl-dev
+BuildRequires:  flex bison
+BuildRequires:  ncurses-dev
+BuildRequires:  slang-dev
+BuildRequires:  libunwind-dev
+BuildRequires:  libunwind-dev32
+BuildRequires:  zlib-dev
+BuildRequires:  xz-dev
+BuildRequires:  numactl-dev
+BuildRequires:  perl
+BuildRequires:  xmlto
+BuildRequires:  asciidoc
+BuildRequires:  util-linux
+BuildRequires:  libxml2-dev
+BuildRequires:  libxslt
+BuildRequires:  docbook-xml
+BuildRequires:  audit-dev
+BuildRequires:  python3-dev
+BuildRequires:  python3-staticdev
+BuildRequires:  python3
+BuildRequires:  babeltrace-dev
+BuildRequires:  zstd-dev
+BuildRequires:  libcap-dev
+BuildRequires:  pciutils-dev
+BuildRequires:  pciutils
+BuildRequires:  libcap-ng
+BuildRequires:  libcap-ng-dev
+BuildRequires:  libcap-dev
+BuildRequires:  libcap
 
 Requires: systemd-bin
 Requires: init-rdahead-extras
@@ -131,7 +169,7 @@ Linux kernel build files
 %patch0115 -p1
 %patch0116 -p1
 %patch0117 -p1
-%patch0118 -p1
+#%patch0118 -p1
 %patch0119 -p1
 %patch0120 -p1
 %patch0121 -p1
@@ -148,7 +186,12 @@ cp %{SOURCE1} .
 
 %build
 BuildKernel() {
-
+    export V=1
+    export VERBOSE=1
+    unset CFLAGS
+    unset CXXFLAGS
+    unset LDFLAGS
+    export KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe"
     Target=$1
     Arch=x86_64
     ExtraVer="-%{release}.${Target}"
@@ -159,7 +202,21 @@ BuildKernel() {
     cp config ${Target}/.config
 
     make O=${Target} -s ARCH=${Arch} olddefconfig
-    make O=${Target} -s ARCH=${Arch} CONFIG_DEBUG_SECTION_MISMATCH=y %{?_smp_mflags} %{?sparse_mflags}
+    make O=${Target} -s ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CONFIG_DEBUG_SECTION_MISMATCH=y %{?_smp_mflags} %{?sparse_mflags}
+
+#     make O=${Target} ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} tools/acpi
+#     make O=${Target} ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} tools/cgroup
+#     make O=${Target} ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} tools/cpupower
+#     make O=${Target} ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} tools/firmware
+#     make O=${Target} ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} tools/gpio
+#     make O=${Target} ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} tools/intel-speed-select
+#     make O=${Target} ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} tools/objtool
+#     make O=${Target} ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} tools/pci
+#     make O=${Target} ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} tools/bootconfig
+#     make O=${Target} ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} tools/spi
+#     make O=${Target} ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} tools/tmon
+#     make O=${Target} ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} tools/turbostat
+#     make O=${Target} ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} tools/x86_energy_perf_policy
 }
 
 BuildKernel %{ktarget}
@@ -167,7 +224,12 @@ BuildKernel %{ktarget}
 %install
 
 InstallKernel() {
-
+    export V=1
+    export VERBOSE=1
+    unset CFLAGS
+    unset CXXFLAGS
+    unset LDFLAGS
+    export CFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe"
     Target=$1
     Kversion=$2
     Arch=x86_64
@@ -183,7 +245,33 @@ InstallKernel() {
     chmod 755 ${KernelDir}/org.clearlinux.${Target}.%{version}-%{release}
 
     mkdir -p %{buildroot}/usr/lib/modules
-    make O=${Target} -s ARCH=${Arch} INSTALL_MOD_PATH=%{buildroot}/usr modules_install
+    make O=${Target} ARCH=${Arch} INSTALL_MOD_PATH=%{buildroot}/usr V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} modules_install
+
+    make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CXXFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" -j1 tools/acpi tools/acpi_install
+
+    make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 confdir=/usr/share/cpupower DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CXXFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" -j1 tools/cpupower tools/cpupower_install
+
+    make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CXXFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" -C tools/ -j1 firmware
+    install -m 755 tools/firmware/ihex2fw %{buildroot}/usr/bin/
+
+    make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 -C tools/ -j1 intel-speed-select intel-speed-select_install
+
+    make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 -C tools/ -j1 objtool
+    install -m 755 native/objtool/objtool %{buildroot}/usr/bin/
+    install -m 755 native/objtool/fixdep %{buildroot}/usr/bin/
+    install -m 755 native/objtool/libsubcmd.a %{buildroot}/usr/lib64/
+
+    make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CXXFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" -C tools/ -j1 pci pci_install
+
+    make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 -C tools/ -j1 bootconfig bootconfig_install
+
+    make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CXXFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" -C tools/ -j1 spi spi_install
+
+    make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 INSTALL_ROOT=%{buildroot} DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CXXFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" -C tools/ -j1 tmon_install
+
+    make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 INSTALL_ROOT=%{buildroot} DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CXXFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" -C tools/ -j1 turbostat turbostat_install
+
+    make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 INSTALL_ROOT=%{buildroot} DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 KCFLAGS="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CXXFLAGS+="-Ofast -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" -C tools/ -j1 x86_energy_perf_policy_install
 
     rm -f %{buildroot}/usr/lib/modules/${Kversion}/build
     rm -f %{buildroot}/usr/lib/modules/${Kversion}/source
@@ -219,12 +307,12 @@ createCPIO() {
 
     mkdir -p cpiofile${ModDir}/kernel/drivers/input/{serio,keyboard}
     mkdir -p cpiofile${ModDir}/kernel/drivers/hid
-    cp %{buildroot}${ModDir}/kernel/drivers/input/serio/i8042.ko      cpiofile${ModDir}/kernel/drivers/input/serio
-    cp %{buildroot}${ModDir}/kernel/drivers/input/serio/libps2.ko     cpiofile${ModDir}/kernel/drivers/input/serio
-    cp %{buildroot}${ModDir}/kernel/drivers/input/keyboard/atkbd.ko   cpiofile${ModDir}/kernel/drivers/input/keyboard
-    cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-logitech-dj.ko    cpiofile${ModDir}/kernel/drivers/hid
-    cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-logitech-hidpp.ko cpiofile${ModDir}/kernel/drivers/hid
-    cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-apple.ko          cpiofile${ModDir}/kernel/drivers/hid
+    cp %{buildroot}${ModDir}/kernel/drivers/input/serio/i8042.ko      cpiofile${ModDir}/kernel/drivers/input/serio || :
+    cp %{buildroot}${ModDir}/kernel/drivers/input/serio/libps2.ko     cpiofile${ModDir}/kernel/drivers/input/serio || :
+    cp %{buildroot}${ModDir}/kernel/drivers/input/keyboard/atkbd.ko   cpiofile${ModDir}/kernel/drivers/input/keyboard || :
+    cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-logitech-dj.ko    cpiofile${ModDir}/kernel/drivers/hid || :
+    cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-logitech-hidpp.ko cpiofile${ModDir}/kernel/drivers/hid || :
+    cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-apple.ko          cpiofile${ModDir}/kernel/drivers/hid || :
     cp %{buildroot}${ModDir}/modules.order   cpiofile${ModDir}
     cp %{buildroot}${ModDir}/modules.builtin cpiofile${ModDir}
 
@@ -256,6 +344,11 @@ cp -a LICENSES/* %{buildroot}/usr/share/package-licenses/linux
 /usr/lib/kernel/default-%{ktarget}
 /usr/lib/modules/%{kversion}/kernel
 /usr/lib/modules/%{kversion}/modules.*
+/usr/bin
+/usr/sbin
+/usr/share
+/usr/lib64
+/usr/include
 
 %files extra
 %dir /usr/lib/kernel
