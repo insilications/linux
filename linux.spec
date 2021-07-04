@@ -5,7 +5,7 @@
 #
 
 Name:           linux
-Version:        5.13
+Version:        5.13.0
 Release:        222
 License:        GPL-2.0
 Summary:        The Linux kernel
