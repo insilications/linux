@@ -5,13 +5,13 @@
 #
 
 Name:           linux
-Version:        5.14
+Version:        5.13
 Release:        222
 License:        GPL-2.0
 Summary:        The Linux kernel
 Url:            http://www.kernel.org/
 Group:          kernel
-Source0:        file:///insilications/apps/linux-5.14.tar.gz
+Source0:        file:///insilications/apps/linux-5.13.tar.gz
 Source1:        config
 Source2:        cmdline
 
@@ -143,7 +143,7 @@ Requires:       linux-license = %{version}-%{release}
 Linux kernel build files
 
 %prep
-%setup -q -n linux-5.14
+%setup -q -n linux-5.13
 
 #cve.patch.start cve patches
 #cve.patch.end
@@ -291,18 +291,18 @@ createCPIO() {
     KernelDir=%{buildroot}/usr/lib/kernel
     ModDir=/usr/lib/modules/${Kversion}
 
-    mkdir -p cpiofile${ModDir}/kernel/drivers/input/{serio,keyboard}
-    mkdir -p cpiofile${ModDir}/kernel/drivers/hid
+    mkdir -p cpiofile${ModDir}/kernel/drivers/input/{serio,keyboard} || :
+    mkdir -p cpiofile${ModDir}/kernel/drivers/hid || :
     cp %{buildroot}${ModDir}/kernel/drivers/input/serio/i8042.ko      cpiofile${ModDir}/kernel/drivers/input/serio || :
     cp %{buildroot}${ModDir}/kernel/drivers/input/serio/libps2.ko     cpiofile${ModDir}/kernel/drivers/input/serio || :
     cp %{buildroot}${ModDir}/kernel/drivers/input/keyboard/atkbd.ko   cpiofile${ModDir}/kernel/drivers/input/keyboard || :
     cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-logitech-dj.ko    cpiofile${ModDir}/kernel/drivers/hid || :
     cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-logitech-hidpp.ko cpiofile${ModDir}/kernel/drivers/hid || :
     cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-apple.ko          cpiofile${ModDir}/kernel/drivers/hid || :
-    cp %{buildroot}${ModDir}/modules.order   cpiofile${ModDir}
-    cp %{buildroot}${ModDir}/modules.builtin cpiofile${ModDir}
+    cp %{buildroot}${ModDir}/modules.order   cpiofile${ModDir} || :
+    cp %{buildroot}${ModDir}/modules.builtin cpiofile${ModDir} || :
 
-    depmod -b cpiofile/usr ${Kversion}
+    depmod -b cpiofile/usr ${Kversion} || :
 
     (
       cd cpiofile
