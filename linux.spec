@@ -171,7 +171,7 @@ Linux kernel build files
 %patch0117 -p1
 #%patch0118 -p1
 %patch0119 -p1
-%patch0120 -p1
+#%patch0120 -p1
 %patch0121 -p1
 %patch0122 -p1
 %patch0123 -p1
