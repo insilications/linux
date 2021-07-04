@@ -5,13 +5,13 @@
 #
 
 Name:           linux
-Version:        5.12.13
-Release:        4444
+Version:        5.14
+Release:        222
 License:        GPL-2.0
 Summary:        The Linux kernel
 Url:            http://www.kernel.org/
 Group:          kernel
-Source0:        file:///insilications/apps/linux-5.12.13.tar.gz
+Source0:        file:///insilications/apps/linux-5.14.tar.gz
 Source1:        config
 Source2:        cmdline
 
@@ -143,7 +143,7 @@ Requires:       linux-license = %{version}-%{release}
 Linux kernel build files
 
 %prep
-%setup -q -n linux-5.12.13
+%setup -q -n linux-5.14
 
 #cve.patch.start cve patches
 #cve.patch.end
