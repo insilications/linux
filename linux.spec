@@ -6,7 +6,7 @@
 
 Name:           linux
 Version:        5.13.0
-Release:        222
+Release:        333
 License:        GPL-2.0
 Summary:        The Linux kernel
 Url:            http://www.kernel.org/
@@ -158,20 +158,20 @@ Linux kernel build files
 %patch0104 -p1
 %patch0105 -p1
 %patch0106 -p1
-#%patch0107 -p1
+%patch0107 -p1
 %patch0108 -p1
 %patch0109 -p1
 %patch0110 -p1
 %patch0111 -p1
 %patch0112 -p1
-#%patch0113 -p1
+%patch0113 -p1
 %patch0114 -p1
 %patch0115 -p1
 %patch0116 -p1
 %patch0117 -p1
 #%patch0118 -p1
 %patch0119 -p1
-#%patch0120 -p1
+%patch0120 -p1
 %patch0121 -p1
 %patch0122 -p1
 %patch0123 -p1
