@@ -29,6 +29,7 @@ cat config | grep CONFIG_DEBUG_KERNEL
 cat config | grep CONFIG_UNWINDER_ORC
 cat config | grep CONFIG_PAGE_POISONING
 cat config | grep CONFIG_DEBUG_NOTIFIERS
+cat config | grep CONFIG_DEBUG_SG
 cat config | grep CONFIG_SHUFFLE_PAGE_ALLOCATOR
 cat config | grep CONFIG_REFCOUNT_FULL
 cat config | grep CONFIG_VMAP_STACK
@@ -37,3 +38,7 @@ cat config | grep CONFIG_ZRAM_WRITEBACK
 cat config | grep CONFIG_ZRAM
 cat config | grep SCHED_STACK_END_CHECK
 cat config | grep CONFIG_DYNAMIC_DEBUG
+cat config | grep CONFIG_FRAME_POINTER
+cat config | grep CONFIG_STACK_VALIDATION
+cat config | grep CONFIG_STACKTRACE
+
