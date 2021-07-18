@@ -47,7 +47,7 @@ cat config | grep CONFIG_DMI_SYSFS
 cat config | grep CONFIG_CGROUP_FREEZER
 cat config | grep CONFIG_FRAMEBUFFER_CONSOLE
 cat config | grep CONFIG_EFI_STUB
-cat config | grep CONFIG_EFI
+cat config | grep CONFIG_EFI=
 cat config | grep CONFIG_RELOCATABLE
 cat config | grep CONFIG_EFIVAR_FS
 cat config | grep CONFIG_EFI_VARS
