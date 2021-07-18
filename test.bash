@@ -45,7 +45,6 @@ cat config | grep CONFIG_STACKTRACE
 cat config | grep CONFIG_EFI_TEST
 cat config | grep CONFIG_DMI_SYSFS
 cat config | grep CONFIG_CGROUP_FREEZER
-cat config | grep CONFIG_X86_SYSFB
 cat config | grep CONFIG_FRAMEBUFFER_CONSOLE
 cat config | grep CONFIG_EFI_STUB
 cat config | grep CONFIG_EFI
