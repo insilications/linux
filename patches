@@ -33,3 +33,4 @@ git am /aot/build/clearlinux/packages/linux/cpu-patches-v2-sep/0002-init-Kconfig
 git am /aot/build/clearlinux/packages/linux/cpu-patches-v2-sep/0003-init-Kconfig-add-O1-flag.patch
 git am /aot/build/clearlinux/packages/linux/cpu-patches-v2-sep/0004-Makefile-Turn-off-loop-vectorization-for-GCC-O3-opti.patch
 
+git am /aot/build/clearlinux/packages/linux/lrng-upstream-patches/0001-lrng-patches.patch
