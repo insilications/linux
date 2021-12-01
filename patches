@@ -34,3 +34,17 @@ git am /aot/build/clearlinux/packages/linux/cpu-patches-v2-sep/0003-init-Kconfig
 git am /aot/build/clearlinux/packages/linux/cpu-patches-v2-sep/0004-Makefile-Turn-off-loop-vectorization-for-GCC-O3-opti.patch
 
 git am /aot/build/clearlinux/packages/linux/lrng-upstream-patches/0001-lrng-patches.patch
+
+git am /aot/build/clearlinux/packages/linux/bfq-lucjan-v4-all/0001-bfq-lucjan.patch
+
+git am /aot/build/clearlinux/packages/linux/ll-patches/0001-LL-kconfig-add-750Hz-timer-interrupt-kernel-config-o.patch
+git am /aot/build/clearlinux/packages/linux/ll-patches/0002-LL-elevator-set-default-scheduler-to-bfq-for-blk-mq.patch
+git am /aot/build/clearlinux/packages/linux/ll-patches/0003-sched-core-nr_migrate-256-increases-number-of-tasks-.patch
+
+git am /aot/build/clearlinux/packages/linux/bbr2-patches/0001-bbr2-5.15-introduce-BBRv2.patch
+
+git am /aot/build/clearlinux/packages/linux/ntfs3-patches-v2/0001-ntfs3-patches.patch
+
+git am /aot/build/clearlinux/packages/linux/bcache/PATCH-bcache-Fix-a-NULL-pointer-dereference-in-detached_dev_do_request.mbox
+git am /aot/build/clearlinux/packages/linux/bcache/PATCH-bcache-Remove-redundant-flush_workqueue-calls.mbox
+
