@@ -48,3 +48,38 @@ git am /aot/build/clearlinux/packages/linux/ntfs3-patches-v2/0001-ntfs3-patches.
 git am /aot/build/clearlinux/packages/linux/bcache/PATCH-bcache-Fix-a-NULL-pointer-dereference-in-detached_dev_do_request.mbox
 git am /aot/build/clearlinux/packages/linux/bcache/PATCH-bcache-Remove-redundant-flush_workqueue-calls.mbox
 
+git am /aot/build/clearlinux/packages/linux/lib_zstd/0001-lib-zstd-Add-kernel-specific-API.patch
+git am /aot/build/clearlinux/packages/linux/lib_zstd/0002-lib-zstd-Add-decompress_sources.h-for-decompress_unz.patch
+git am /aot/build/clearlinux/packages/linux/lib_zstd/0003-lib-zstd-Upgrade-to-latest-upstream-zstd-version-1.4.patch
+git am /aot/build/clearlinux/packages/linux/lib_zstd/0004-MAINTAINERS-Add-maintainer-entry-for-zstd.patch
+git am /aot/build/clearlinux/packages/linux/lib_zstd/0005-kbuild-Add-make-tarzst-pkg-build-option.patch
+git am /aot/build/clearlinux/packages/linux/lib_zstd/0006-lib-zstd-Add-cast-to-silence-clang-s-Wbitwise-instea.patch
+
+
+git am /aot/build/clearlinux/packages/linux/net/0001-net-introduce-sk_forward_alloc_get.patch
+git am /aot/build/clearlinux/packages/linux/net/0002-tcp-move-inet-rx_dst_ifindex-to-sk-sk_rx_dst_ifindex.patch
+git am /aot/build/clearlinux/packages/linux/net/0003-ipv6-move-inet6_sk-sk-rx_dst_cookie-to-sk-sk_rx_dst_.patch
+git am /aot/build/clearlinux/packages/linux/net/0004-bpf-sockmap-Use-stricter-sk-state-checks-in-sk_looku.patch
+git am /aot/build/clearlinux/packages/linux/net/0005-tcp-minor-optimization-in-tcp_add_backlog.patch
+git am /aot/build/clearlinux/packages/linux/net/0006-tcp-remove-dead-code-in-__tcp_v6_send_check.patch
+git am /aot/build/clearlinux/packages/linux/net/0007-tcp-small-optimization-in-tcp_v6_send_check.patch
+git am /aot/build/clearlinux/packages/linux/net/0008-net-use-sk_is_tcp-in-more-places.patch
+git am /aot/build/clearlinux/packages/linux/net/0009-net-remove-sk_route_forced_caps.patch
+git am /aot/build/clearlinux/packages/linux/net/0010-net-remove-sk_route_nocaps.patch
+git am /aot/build/clearlinux/packages/linux/net/0011-ipv6-shrink-struct-ipcm6_cookie.patch
+git am /aot/build/clearlinux/packages/linux/net/0012-net-shrink-struct-sock-by-8-bytes.patch
+git am /aot/build/clearlinux/packages/linux/net/0013-net-forward_alloc_get-depends-on-CONFIG_MPTCP.patch
+git am /aot/build/clearlinux/packages/linux/net/0014-net-cache-align-tcp_memory_allocated-tcp_sockets_all.patch
+git am /aot/build/clearlinux/packages/linux/net/0015-tcp-small-optimization-in-tcp-recvmsg.patch
+git am /aot/build/clearlinux/packages/linux/net/0016-tcp-add-RETPOLINE-mitigation-to-sk_backlog_rcv.patch
+git am /aot/build/clearlinux/packages/linux/net/0017-tcp-annotate-data-races-on-tp-segs_in-and-tp-data_se.patch
+git am /aot/build/clearlinux/packages/linux/net/0018-tcp-annotate-races-around-tp-urg_data.patch
+git am /aot/build/clearlinux/packages/linux/net/0019-tcp-tp-urg_data-is-unlikely-to-be-set.patch
+git am /aot/build/clearlinux/packages/linux/net/0020-tcp-avoid-indirect-calls-to-sock_rfree.patch
+git am /aot/build/clearlinux/packages/linux/net/0021-tcp-defer-skb-freeing-after-socket-lock-is-released.patch
+git am /aot/build/clearlinux/packages/linux/net/0022-tcp-check-local-var-timeo-before-socket-fields-in-on.patch
+git am /aot/build/clearlinux/packages/linux/net/0023-tcp-do-not-call-tcp_cleanup_rbuf-if-we-have-a-backlo.patch
+git am /aot/build/clearlinux/packages/linux/net/0024-net-move-early-demux-fields-close-to-sk_refcnt.patch
+
+
+
