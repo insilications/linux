@@ -57,8 +57,8 @@ BuildRequires:  libcap-ng
 BuildRequires:  libcap-ng-dev
 BuildRequires:  libcap-dev
 BuildRequires:  libcap
-BuildRequires:  compat-json-c-soname-4
-BuildRequires:  compat-json-c-soname-4-lib
+BuildRequires:  json-c
+BuildRequires:  json-c-dev
 
 Requires: systemd-bin
 Requires: init-rdahead-extras
