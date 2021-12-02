@@ -11,7 +11,7 @@ License:        GPL-2.0
 Summary:        The Linux kernel
 Url:            http://www.kernel.org/
 Group:          kernel
-Source0:        https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.15.4.tar.xz
+Source0:        file:///insilications/apps/linux-5.15.6.tar.gz
 Source1:        config
 Source2:        cmdline
 
