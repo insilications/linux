@@ -269,6 +269,7 @@ InstallKernel() {
     unset CXXFLAGS
     unset LDFLAGS
     export CFLAGS="-O3 -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe"
+    export KCFLAGS="-O3 -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe"
     Target=$1
     Kversion=$2
     Arch=x86_64
