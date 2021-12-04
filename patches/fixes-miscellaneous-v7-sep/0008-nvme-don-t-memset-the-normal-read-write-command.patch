@@ -1,7 +1,7 @@
-From 2a0ac44f1dc211f0357d27b81349844a59b15c71 Mon Sep 17 00:00:00 2001
+From 7fbf900979ee8a44b10c38ec66955a9d7426a3a1 Mon Sep 17 00:00:00 2001
 From: Jens Axboe <axboe@kernel.dk>
 Date: Tue, 12 Oct 2021 12:13:52 -0600
-Subject: [PATCH 08/16] nvme: don't memset() the normal read/write command
+Subject: [PATCH 08/17] nvme: don't memset() the normal read/write command
 
 This memset in the fast path costs a lot of cycles on my setup. Here's a
 top-of-profile of doing ~6.7M IOPS:
@@ -28,7 +28,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  1 file changed, 25 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index f8dd664..2d609ee 100644
+index f8dd664b2..2d609ee57 100644
 --- a/drivers/nvme/host/core.c
 +++ b/drivers/nvme/host/core.c
 @@ -922,9 +922,16 @@ static inline blk_status_t nvme_setup_rw(struct nvme_ns *ns,
@@ -119,5 +119,5 @@ index f8dd664..2d609ee 100644
  		break;
  	default:
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 

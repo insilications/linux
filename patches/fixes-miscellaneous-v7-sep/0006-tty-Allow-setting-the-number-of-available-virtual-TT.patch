@@ -1,7 +1,7 @@
-From 777658e402b48aef2890ff5cd5d1ab19ff249fb7 Mon Sep 17 00:00:00 2001
+From ae0a74f95b2b46f52077c6dab67352edbc80028d Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 Aug 2021 13:28:51 +0200
-Subject: [PATCH 06/16] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 06/17] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -10,7 +10,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  2 files changed, 27 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/tty/Kconfig b/drivers/tty/Kconfig
-index 23cc988..d49b71e 100644
+index 23cc988c6..d49b71eab 100644
 --- a/drivers/tty/Kconfig
 +++ b/drivers/tty/Kconfig
 @@ -75,6 +75,19 @@ config VT_CONSOLE_SLEEP
@@ -34,7 +34,7 @@ index 23cc988..d49b71e 100644
  	bool
  	depends on VT
 diff --git a/include/uapi/linux/vt.h b/include/uapi/linux/vt.h
-index e9d39c4..3bceead 100644
+index e9d39c485..3bceead8d 100644
 --- a/include/uapi/linux/vt.h
 +++ b/include/uapi/linux/vt.h
 @@ -3,12 +3,25 @@
@@ -65,5 +65,5 @@ index e9d39c4..3bceead 100644
  		   consoles 16 and higher (since it returns a short) */
  
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 

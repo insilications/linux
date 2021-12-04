@@ -1,7 +1,7 @@
-From 71b99a8421ecf2aa910ab642d2fd2cf1144ae922 Mon Sep 17 00:00:00 2001
+From 6836b15cebfe34af27a6988c075ea38ff5c84977 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 12/16] mm: Disable watermark boosting by default
+Subject: [PATCH 12/17] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -31,7 +31,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 4fb8815..968a02c 100644
+index 4fb88150d..968a02c6b 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -340,7 +340,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
@@ -44,5 +44,5 @@ index 4fb8815..968a02c 100644
  
  static unsigned long nr_kernel_pages __initdata;
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 

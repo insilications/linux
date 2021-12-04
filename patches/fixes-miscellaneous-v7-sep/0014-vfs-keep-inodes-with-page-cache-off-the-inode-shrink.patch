@@ -1,7 +1,7 @@
-From 88f5d138d97ca452768dd52df6281b8b3c6987d2 Mon Sep 17 00:00:00 2001
+From ea9c0d0b49ae51928d31c5c77facd13e0af95631 Mon Sep 17 00:00:00 2001
 From: Johannes Weiner <hannes@cmpxchg.org>
 Date: Thu, 28 Oct 2021 13:22:05 +1100
-Subject: [PATCH 14/16] vfs: keep inodes with page cache off the inode shrinker
+Subject: [PATCH 14/17] vfs: keep inodes with page cache off the inode shrinker
  LRU
 
 Historically (pre-2.5), the inode shrinker used to reclaim only empty
@@ -78,7 +78,7 @@ Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
  8 files changed, 120 insertions(+), 22 deletions(-)
 
 diff --git a/fs/inode.c b/fs/inode.c
-index 9abc88d..3eba094 100644
+index 9abc88d79..3eba0940f 100644
 --- a/fs/inode.c
 +++ b/fs/inode.c
 @@ -428,11 +428,20 @@ void ihold(struct inode *inode)
@@ -189,7 +189,7 @@ index 9abc88d..3eba094 100644
  		return;
  	}
 diff --git a/fs/internal.h b/fs/internal.h
-index 3cd065c..2854ff2 100644
+index 3cd065c8a..2854ff29f 100644
 --- a/fs/internal.h
 +++ b/fs/internal.h
 @@ -149,7 +149,6 @@ extern int vfs_open(const struct path *, struct file *);
@@ -201,7 +201,7 @@ index 3cd065c..2854ff2 100644
  
  /*
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 56eba72..af7bee1 100644
+index 56eba7234..af7bee128 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
 @@ -3194,6 +3194,7 @@ static inline void remove_inode_hash(struct inode *inode)
@@ -213,7 +213,7 @@ index 56eba72..af7bee1 100644
  extern int sb_set_blocksize(struct super_block *, int);
  extern int sb_min_blocksize(struct super_block *, int);
 diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
-index 62db6b0..5c74a45 100644
+index 62db6b017..5c74a45ff 100644
 --- a/include/linux/pagemap.h
 +++ b/include/linux/pagemap.h
 @@ -23,6 +23,56 @@ static inline bool mapping_empty(struct address_space *mapping)
@@ -274,7 +274,7 @@ index 62db6b0..5c74a45 100644
   * Bits in mapping->flags.
   */
 diff --git a/mm/filemap.c b/mm/filemap.c
-index 82a17c3..b432165 100644
+index 82a17c35e..b432165a7 100644
 --- a/mm/filemap.c
 +++ b/mm/filemap.c
 @@ -262,9 +262,13 @@ void delete_from_page_cache(struct page *page)
@@ -310,7 +310,7 @@ index 82a17c3..b432165 100644
  	for (i = 0; i < pagevec_count(pvec); i++)
  		page_cache_free_page(mapping, pvec->pages[i]);
 diff --git a/mm/truncate.c b/mm/truncate.c
-index 714eaf1..cc83a3f 100644
+index 714eaf198..cc83a3f7c 100644
 --- a/mm/truncate.c
 +++ b/mm/truncate.c
 @@ -45,9 +45,13 @@ static inline void __clear_shadow_entry(struct address_space *mapping,
@@ -380,7 +380,7 @@ index 714eaf1..cc83a3f 100644
  }
  
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 0d7a5a6..da279fe 100644
+index 0d7a5a61b..da279fefd 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -1105,6 +1105,8 @@ static int __remove_mapping(struct address_space *mapping, struct page *page,
@@ -412,7 +412,7 @@ index 0d7a5a6..da279fe 100644
  }
  
 diff --git a/mm/workingset.c b/mm/workingset.c
-index d5b81e4..23df60c 100644
+index d5b81e4f4..23df60ce2 100644
 --- a/mm/workingset.c
 +++ b/mm/workingset.c
 @@ -543,6 +543,13 @@ static enum lru_status shadow_lru_isolate(struct list_head *item,
@@ -440,5 +440,5 @@ index d5b81e4..23df60c 100644
  out:
  	cond_resched();
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
