@@ -1,3 +1,5 @@
+git am /aot/build/clearlinux/packages/linux/patches/lrng-upstream-patches-v2/0001-lrng-patches.patch
+
 git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0001-net-sched-allow-configuring-cake-qdisc-as-default.patch
 git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0006-tty-Allow-setting-the-number-of-available-virtual-TT.patch
 git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0008-nvme-don-t-memset-the-normal-read-write-command.patch
@@ -5,6 +7,7 @@ git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0
 git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0012-mm-Disable-watermark-boosting-by-default.patch
 git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0013-Disable-stack-conservation-for-GCC.patch
 git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0014-vfs-keep-inodes-with-page-cache-off-the-inode-shrink.patch
+git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0015-x86-csum-rewrite-csum_partial.patch
 git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0016-x86-csum-Fix-compilation-error-for-UM.patch
 git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0017-x86-csum-Fix-initial-seed-for-odd-buffers.patch
 
@@ -28,7 +31,8 @@ git am /aot/build/clearlinux/packages/linux/patches/lru-patches-le9-v3/0009-mm-m
 git am /aot/build/clearlinux/packages/linux/patches/lru-patches-le9-v3/0010-mm-multigenerational-lru-documentation.patch
 git am /aot/build/clearlinux/packages/linux/patches/lru-patches-le9-v3/le9ec-5.15-MGLRU.patch
 
-git am /aot/build/clearlinux/packages/linux/patches/cpu-patches-v2-sep/more-uarches-for-kernel-5.15.patch
+pit < /aot/build/clearlinux/packages/linux/patches/cpu-patches-v2-sep/more-uarches-for-kernel-5.15+.patch
+
 git am /aot/build/clearlinux/packages/linux/patches/cpu-patches-v2-sep/0002-init-Kconfig-enable-O3-for-all-arches.patch
 git am /aot/build/clearlinux/packages/linux/patches/cpu-patches-v2-sep/0003-init-Kconfig-add-O1-flag.patch
 git am /aot/build/clearlinux/packages/linux/patches/cpu-patches-v2-sep/0004-Makefile-Turn-off-loop-vectorization-for-GCC-O3-opti.patch
@@ -36,7 +40,6 @@ git am /aot/build/clearlinux/packages/linux/patches/cpu-patches-v2-sep/0004-Make
 git am /aot/build/clearlinux/packages/linux/patches/bfq-lucjan-v4-all/0001-bfq-lucjan.patch
 
 git am /aot/build/clearlinux/packages/linux/patches/ll-patches/0001-LL-kconfig-add-750Hz-timer-interrupt-kernel-config-o.patch
-git am /aot/build/clearlinux/packages/linux/patches/ll-patches/0002-LL-elevator-set-default-scheduler-to-bfq-for-blk-mq.patch
 git am /aot/build/clearlinux/packages/linux/patches/ll-patches/0003-sched-core-nr_migrate-256-increases-number-of-tasks-.patch
 
 git am /aot/build/clearlinux/packages/linux/patches/bbr2-patches/0001-bbr2-5.15-introduce-BBRv2.patch
@@ -52,7 +55,6 @@ git am /aot/build/clearlinux/packages/linux/patches/lib_zstd/0003-lib-zstd-Upgra
 git am /aot/build/clearlinux/packages/linux/patches/lib_zstd/0004-MAINTAINERS-Add-maintainer-entry-for-zstd.patch
 git am /aot/build/clearlinux/packages/linux/patches/lib_zstd/0005-kbuild-Add-make-tarzst-pkg-build-option.patch
 git am /aot/build/clearlinux/packages/linux/patches/lib_zstd/0006-lib-zstd-Add-cast-to-silence-clang-s-Wbitwise-instea.patch
-
 
 git am /aot/build/clearlinux/packages/linux/patches/net/0001-net-introduce-sk_forward_alloc_get.patch
 git am /aot/build/clearlinux/packages/linux/patches/net/0002-tcp-move-inet-rx_dst_ifindex-to-sk-sk_rx_dst_ifindex.patch
@@ -78,5 +80,3 @@ git am /aot/build/clearlinux/packages/linux/patches/net/0021-tcp-defer-skb-freei
 git am /aot/build/clearlinux/packages/linux/patches/net/0022-tcp-check-local-var-timeo-before-socket-fields-in-on.patch
 git am /aot/build/clearlinux/packages/linux/patches/net/0023-tcp-do-not-call-tcp_cleanup_rbuf-if-we-have-a-backlo.patch
 git am /aot/build/clearlinux/packages/linux/patches/net/0024-net-move-early-demux-fields-close-to-sk_refcnt.patch
-
-git am /aot/build/clearlinux/packages/linux/patches/lrng-upstream-patches-v2/0001-lrng-patches.patch
