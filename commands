@@ -1,0 +1,41 @@
+log_buf_len=256M
+acpi.debug_layer=0x9f
+acpi.debug_level=0xffffffff
+
+BuildRequires: llvm-staticdev
+BuildRequires: llvm-libexec
+BuildRequires: llvm-lib
+BuildRequires: llvm-dev
+BuildRequires: llvm-data
+BuildRequires: llvm-bin
+BuildRequires: llvm
+
+export LLVM=1
+export LLVM_IAS=1
+export CC=clang
+export V=1
+export VERBOSE=1
+unset CFLAGS
+unset CXXFLAGS
+unset LDFLAGS
+LLVM=1 LLVM_IAS=1 CC=clang V=1 VERBOSE=1
+
+
+make ARCH=x86_64 LSMOD=/home/boni/.config/modprobed.db localmodconfig
+scripts/kconfig/merge_config.sh ARCH=x86_64
+make ARCH=x86_64 menuconfig
+make ARCH=x86_64 mrproper
+
+make O=native ARCH=x86_64 V=1 VERBOSE=1 KCFLAGS="-O3 -march=native -Wl,-O2 -falign-functions=32 -flimit-function-alignment -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta" olddefconfig
+
+make LLVM=1 LLVM_IAS=1 CC=clang V=1 VERBOSE=1 mrproper
+cp config ${Target}/.config
+
+make LLVM=1 LLVM_IAS=1 CC=clang V=1 VERBOSE=1 ARCH=x86_64 olddefconfig
+make LLVM=1 LLVM_IAS=1 CC=clang V=1 VERBOSE=1 ARCH=x86_64 CONFIG_DEBUG_SECTION_MISMATCH=y %{?_smp_mflags}
+
+make LLVM=1 LLVM_IAS=1 CC=clang V=1 VERBOSE=1 ARCH=x86_64 CONFIG_DEBUG_SECTION_MISMATCH=y lz4
+
+make LLVM=1 LLVM_IAS=1 CC=clang V=1 VERBOSE=1 O=native ARCH=x86_64 CONFIG_DEBUG_SECTION_MISMATCH=y -j16
+
+
