@@ -1,7 +1,7 @@
-From 6c19488f39f8acb1360e26ce77ed35df20129713 Mon Sep 17 00:00:00 2001
+From 9070634bc03d869ef7631cd805dca8d91224bc70 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 17 Oct 2021 20:23:04 +0200
-Subject: [PATCH 01/15] Linux Random Number Generator
+Subject: [PATCH 01/16] Linux Random Number Generator
 
 In an effort to provide a flexible implementation for a random number
 generator that also delivers entropy during early boot time, allows
@@ -3320,13 +3320,13 @@ index 000000000..3e8f93b53
 +
 +#endif /* _LRNG_H */
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 75cf74a4805dbf983f3cea4b76efd1aba737c89e Mon Sep 17 00:00:00 2001
+From e31a45aaa13a14065ffe830a5db6fdd13522b9bf Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Wed, 13 Oct 2021 22:49:22 +0200
-Subject: [PATCH 02/15] LRNG - IRQ entropy source
+Subject: [PATCH 02/16] LRNG - IRQ entropy source
 
 The interrupt entropy source hooks into the interrupt handler via the
 add_interrupt_randomness function callback. Every interrupt received by
@@ -4476,13 +4476,13 @@ index 000000000..00b16b1aa
 +			LRNG_DATA_SLOTSIZE_BITS)) - 1;
 +}
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 0e967e9f6fb2b776bd1746ed4d334982ad93bb3b Mon Sep 17 00:00:00 2001
+From fd8ac55c422e38ec5bb017adc213c241bf9ba991 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Wed, 13 Oct 2021 22:50:53 +0200
-Subject: [PATCH 03/15] LRNG - sysctls and /proc interface
+Subject: [PATCH 03/16] LRNG - sysctls and /proc interface
 
 The LRNG sysctl interface provides the same controls as the existing
 /dev/random implementation. These sysctls behave identically and are
@@ -4776,13 +4776,13 @@ index 000000000..b48094c32
 +
 +module_init(lrng_proc_type_init);
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 5b1dc20c222daba87a57f9566ae5e5c8436e4265 Mon Sep 17 00:00:00 2001
+From 0e5fa606258f9c617f51aad25eae3ada3e62e687 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Tue, 28 Sep 2021 17:05:50 +0200
-Subject: [PATCH 04/15] LRNG - allocate one DRNG instance per NUMA node
+Subject: [PATCH 04/16] LRNG - allocate one DRNG instance per NUMA node
 
 In order to improve NUMA-locality when serving getrandom(2) requests,
 allocate one DRNG instance per node.
@@ -4971,13 +4971,13 @@ index 000000000..fbfb40a5f
 +	schedule_work(&lrng_drngs_numa_alloc_work);
 +}
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 85de8f2270969f6adeaa6b32465a23b97a5c52fe Mon Sep 17 00:00:00 2001
+From 9897e9cd62715eedda0c73759cdfa9bcbc175568 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Mon, 18 Oct 2021 20:52:42 +0200
-Subject: [PATCH 05/15] LRNG - CPU entropy source
+Subject: [PATCH 05/16] LRNG - CPU entropy source
 
 Certain CPUs provide instructions giving access to an entropy source
 (e.g. RDSEED on Intel/AMD, DARN on POWER, etc.). The LRNG can utilize
@@ -5308,13 +5308,13 @@ index 000000000..6965f9b8a
 +		 data_multiplier);
 +}
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From e3014771572f56a6debba1a81832a0a9699d5c25 Mon Sep 17 00:00:00 2001
+From 3e61d5d799180c9d7ccf65beae5d65ae1572364a Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Fri, 1 Oct 2021 20:47:30 +0200
-Subject: [PATCH 06/15] LRNG - add switchable DRNG support
+Subject: [PATCH 06/16] LRNG - add switchable DRNG support
 
 The DRNG switch support allows replacing the DRNG mechanism of the
 LRNG. The switching support rests on the interface definition of
@@ -5643,13 +5643,13 @@ index 000000000..5fce40149
 +}
 +EXPORT_SYMBOL(lrng_set_drng_cb);
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 54ddd8bd8b0fba2ceccca262572b5e3bd854060c Mon Sep 17 00:00:00 2001
+From cfad4ec5e476c528a790ea9117910ee8f3048a78 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Fri, 18 Jun 2021 08:08:20 +0200
-Subject: [PATCH 07/15] LRNG - add common generic hash support
+Subject: [PATCH 07/16] LRNG - add common generic hash support
 
 The LRNG switchable DRNG support also allows the replacement of the hash
 implementation used as conditioning component. The common generic hash
@@ -5858,13 +5858,13 @@ index 000000000..2f94558d2
 +
 +#endif /* _LRNG_KCAPI_HASH_H */
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 86864d104b0b7075279a1f8e7ea6c6a785c008d5 Mon Sep 17 00:00:00 2001
+From badbd329baf4c6d5e79ec828066ce8aaeed5411c Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Tue, 15 Sep 2020 22:17:43 +0200
-Subject: [PATCH 08/15] crypto: DRBG - externalize DRBG functions for LRNG
+Subject: [PATCH 08/16] crypto: DRBG - externalize DRBG functions for LRNG
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -6008,13 +6008,13 @@ index c41651269..71d53e028 100644
 +
  #endif /* _DRBG_H */
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 7c4be716345f8a5dc20bc2071d6a28d209ed4be3 Mon Sep 17 00:00:00 2001
+From 9829feba47bd8bc0f993ebb7903571ca643b7c2b Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Fri, 18 Jun 2021 08:09:59 +0200
-Subject: [PATCH 09/15] LRNG - add SP800-90A DRBG extension
+Subject: [PATCH 09/16] LRNG - add SP800-90A DRBG extension
 
 Using the LRNG switchable DRNG support, the SP800-90A DRBG extension is
 implemented.
@@ -6300,13 +6300,13 @@ index 000000000..6ca6b05ec
 +MODULE_AUTHOR("Stephan Mueller <smueller@chronox.de>");
 +MODULE_DESCRIPTION("Linux Random Number Generator - SP800-90A DRBG backend");
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From cd6c8c177d2ecdb00ac2401cad95444369e5f7b1 Mon Sep 17 00:00:00 2001
+From d4879606b7f5644acf8346510eb566fff45954c6 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Fri, 18 Jun 2021 08:10:53 +0200
-Subject: [PATCH 10/15] LRNG - add kernel crypto API PRNG extension
+Subject: [PATCH 10/16] LRNG - add kernel crypto API PRNG extension
 
 Add runtime-pluggable support for all PRNGs that are accessible via
 the kernel crypto API, including hardware PRNGs. The PRNG is selected
@@ -6621,13 +6621,13 @@ index 000000000..b06449cb2
 +MODULE_AUTHOR("Stephan Mueller <smueller@chronox.de>");
 +MODULE_DESCRIPTION("Linux Random Number Generator - kernel crypto API DRNG backend");
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From b2351f79a8330d86b6076f8343fb2dc5064a57a0 Mon Sep 17 00:00:00 2001
+From 9ee562d2b1ab5c404d1257f749428ee91655f2c2 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Wed, 16 Sep 2020 09:50:27 +0200
-Subject: [PATCH 11/15] crypto: move Jitter RNG header include dir
+Subject: [PATCH 11/16] crypto: move Jitter RNG header include dir
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -6701,13 +6701,13 @@ similarity index 100%
 rename from crypto/jitterentropy.h
 rename to include/crypto/internal/jitterentropy.h
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 5c2d510691ef2c4b9ec078d3cb7bd0f2fb97bfd3 Mon Sep 17 00:00:00 2001
+From 20edc41b51afb17ef993df77fcd680d1071de6b2 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Wed, 13 Oct 2021 22:53:51 +0200
-Subject: [PATCH 12/15] LRNG - add Jitter RNG fast noise source
+Subject: [PATCH 12/16] LRNG - add Jitter RNG fast noise source
 
 The Jitter RNG fast noise source implemented as part of the kernel
 crypto API is queried for 256 bits of entropy at the time the seed
@@ -6898,13 +6898,13 @@ index 000000000..79b3dc8e8
 +		 " Enabled: %s\n", lrng_jent_initialized ? "true" : "false");
 +}
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 64f531b647811cf2a559474069bff0a42da72801 Mon Sep 17 00:00:00 2001
+From d7ac569794ad253e10dbd950015b14b6272be2e4 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Tue, 28 Sep 2021 18:10:36 +0200
-Subject: [PATCH 13/15] LRNG - add SP800-90B compliant health tests
+Subject: [PATCH 13/16] LRNG - add SP800-90B compliant health tests
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -7537,13 +7537,13 @@ index 000000000..a56a0c426
 +	return lrng_health_pass;
 +}
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 6b0e328cc8a0878b38662d1ce4aa86fd01f8e562 Mon Sep 17 00:00:00 2001
+From e9b43301d6ae84da8628d2edf5e1dd39e6651a9b Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Mon, 18 Oct 2021 20:55:51 +0200
-Subject: [PATCH 14/15] LRNG - add interface for gathering of raw entropy
+Subject: [PATCH 14/16] LRNG - add interface for gathering of raw entropy
 
 The test interface allows a privileged process to capture the raw
 unconditioned noise that is collected by the LRNG for statistical
@@ -8525,13 +8525,13 @@ index 000000000..99cc35abf
 +
 +module_init(lrng_raw_init);
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 2991d6e9aaa2642680251a7452fbc8c0d0b02f9c Mon Sep 17 00:00:00 2001
+From 58234d44c3435f53f2edeea8f87b7aa0d60fbc25 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Tue, 28 Sep 2021 17:41:57 +0200
-Subject: [PATCH 15/15] LRNG - add power-on and runtime self-tests
+Subject: [PATCH 15/16] LRNG - add power-on and runtime self-tests
 
 Parts of the LRNG are already covered by self-tests, including:
 
@@ -9043,5 +9043,220 @@ index 000000000..4412ebd2a
 +
 +module_init(lrng_selftest_init);
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
+
+
+From 271ea71fe0a002fd32786308c49b04126995dde9 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Fri, 3 Dec 2021 21:50:14 +0100
+Subject: [PATCH 16/16] lrng-5.15: update to the latest git HEAD
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ drivers/char/lrng/lrng_chacha20.c      |  2 +-
+ drivers/char/lrng/lrng_es_archrandom.c | 44 ++++++++++++++------------
+ drivers/char/lrng/lrng_es_irq.c        |  2 ++
+ drivers/char/lrng/lrng_health.c        |  4 +--
+ drivers/char/lrng/lrng_internal.h      |  4 ++-
+ drivers/char/lrng/lrng_kcapi.c         |  4 +--
+ drivers/char/lrng/lrng_numa.c          |  1 +
+ drivers/char/lrng/lrng_proc.c          |  1 +
+ drivers/char/lrng/lrng_selftest.c      |  3 +-
+ 9 files changed, 37 insertions(+), 28 deletions(-)
+
+diff --git a/drivers/char/lrng/lrng_chacha20.c b/drivers/char/lrng/lrng_chacha20.c
+index 51f693c29..b5387bb33 100644
+--- a/drivers/char/lrng/lrng_chacha20.c
++++ b/drivers/char/lrng/lrng_chacha20.c
+@@ -29,7 +29,7 @@ struct chacha20_state {
+  * kmalloc too early in the boot cycle. For subsequent allocation requests,
+  * such as per-NUMA-node DRNG instances, kmalloc will be used.
+  */
+-struct chacha20_state chacha20 __latent_entropy;
++struct chacha20_state chacha20;
+ 
+ /*
+  * Update of the ChaCha20 state by either using an unused buffer part or by
+diff --git a/drivers/char/lrng/lrng_es_archrandom.c b/drivers/char/lrng/lrng_es_archrandom.c
+index 6965f9b8a..ecc74b93d 100644
+--- a/drivers/char/lrng/lrng_es_archrandom.c
++++ b/drivers/char/lrng/lrng_es_archrandom.c
+@@ -78,7 +78,7 @@ static u32 lrng_get_arch_data(u8 *outbuf, u32 requested_bits)
+ 	return requested_bits;
+ }
+ 
+-static u32 inline lrng_get_arch_data_compress(u8 *outbuf, u32 requested_bits,
++static inline u32 lrng_get_arch_data_compress(u8 *outbuf, u32 requested_bits,
+ 					      u32 data_multiplier)
+ {
+ 	SHASH_DESC_ON_STACK(shash, NULL);
+@@ -158,28 +158,32 @@ static u32 inline lrng_get_arch_data_compress(u8 *outbuf, u32 requested_bits,
+ static u32 lrng_arch_multiplier(void)
+ {
+ 	static u32 data_multiplier = 0;
++	unsigned long v;
+ 
+-	if (data_multiplier > 0) {
++	if (data_multiplier > 0)
+ 		return data_multiplier;
++
++	if (IS_ENABLED(CONFIG_X86) && !arch_get_random_seed_long(&v)) {
++		/*
++		 * Intel SPEC: pulling 512 blocks from RDRAND ensures
++		 * one reseed making it logically equivalent to RDSEED.
++		 */
++		data_multiplier = 512;
++	} else if (IS_ENABLED(CONFIG_PPC)) {
++		/*
++		 * PowerISA defines DARN to deliver at least 0.5 bits of
++		 * entropy per data bit.
++		 */
++		data_multiplier = 2;
++	} else if (IS_ENABLED(CONFIG_RISCV)) {
++		/*
++		 * riscv-crypto-spec-scalar-1.0.0-rc6.pdf section 4.2 defines
++		 * this requirement.
++		 */
++		data_multiplier = 2;
+ 	} else {
+-		unsigned long v;
+-
+-		if (IS_ENABLED(CONFIG_X86) && !arch_get_random_seed_long(&v)) {
+-			/*
+-			 * Intel SPEC: pulling 512 blocks from RDRAND ensures
+-			 * one reseed making it logically equivalent to RDSEED.
+-			 */
+-			data_multiplier = 512;
+-		} else if (IS_ENABLED(CONFIG_PPC)) {
+-			/*
+-			 * PowerISA defines DARN to deliver at least 0.5 bits of
+-			 * entropy per data bit.
+-			 */
+-			data_multiplier = 2;
+-		} else {
+-			/* CPU provides full entropy */
+-			data_multiplier = CONFIG_LRNG_CPU_FULL_ENT_MULTIPLIER;
+-		}
++		/* CPU provides full entropy */
++		data_multiplier = CONFIG_LRNG_CPU_FULL_ENT_MULTIPLIER;
+ 	}
+ 	return data_multiplier;
+ }
+diff --git a/drivers/char/lrng/lrng_es_irq.c b/drivers/char/lrng/lrng_es_irq.c
+index 82a73b042..b97fec244 100644
+--- a/drivers/char/lrng/lrng_es_irq.c
++++ b/drivers/char/lrng/lrng_es_irq.c
+@@ -111,6 +111,7 @@ static inline bool lrng_gcd_tested(void)
+ static inline void _lrng_gcd_set(u32 running_gcd)
+ {
+ 	lrng_gcd_timer = running_gcd;
++	/* Ensure that update to global variable lrng_gcd_timer is visible */
+ 	mb();
+ }
+ 
+@@ -245,6 +246,7 @@ static int __init lrng_init_time_source(void)
+ 			LRNG_IRQ_OVERSAMPLING_FACTOR);
+ 		lrng_pcpu_check_compression_state();
+ 	}
++	/* Ensure that changes to global variables are visible */
+ 	mb();
+ 
+ 	return 0;
+diff --git a/drivers/char/lrng/lrng_health.c b/drivers/char/lrng/lrng_health.c
+index a56a0c426..66afc04dc 100644
+--- a/drivers/char/lrng/lrng_health.c
++++ b/drivers/char/lrng/lrng_health.c
+@@ -174,8 +174,8 @@ bool lrng_sp80090b_startup_complete(void)
+ {
+ 	struct lrng_health *health = &lrng_health;
+ 
+-	return (lrng_sp80090b_health_enabled()) ? health->sp80090b_startup_done:
+-						  true;
++	return (lrng_sp80090b_health_enabled()) ?
++	       health->sp80090b_startup_done : true;
+ }
+ 
+ bool lrng_sp80090b_compliant(void)
+diff --git a/drivers/char/lrng/lrng_internal.h b/drivers/char/lrng/lrng_internal.h
+index d67aa3c33..c01c4e5fa 100644
+--- a/drivers/char/lrng/lrng_internal.h
++++ b/drivers/char/lrng/lrng_internal.h
+@@ -216,7 +216,8 @@ struct lrng_drng {
+ 	const struct lrng_crypto_cb *crypto_cb;	/* Crypto callbacks */
+ 	atomic_t requests;			/* Number of DRNG requests */
+ 	atomic_t requests_since_fully_seeded;	/* Number DRNG requests since
+-						   last fully seeded */
++						 * last fully seeded
++						 */
+ 	unsigned long last_seeded;		/* Last time it was seeded */
+ 	bool fully_seeded;			/* Is DRNG fully seeded? */
+ 	bool force_reseed;			/* Force a reseed */
+@@ -287,6 +288,7 @@ static inline u32 lrng_compress_osr(void)
+ static inline u32 lrng_reduce_by_osr(u32 entropy_bits)
+ {
+ 	u32 osr_bits = lrng_compress_osr();
++
+ 	return (entropy_bits >= osr_bits) ? (entropy_bits - osr_bits) : 0;
+ }
+ 
+diff --git a/drivers/char/lrng/lrng_kcapi.c b/drivers/char/lrng/lrng_kcapi.c
+index b06449cb2..fa76b2d57 100644
+--- a/drivers/char/lrng/lrng_kcapi.c
++++ b/drivers/char/lrng/lrng_kcapi.c
+@@ -48,14 +48,12 @@ static int lrng_kcapi_drng_seed_helper(void *drng, const u8 *inbuf,
+ 	struct crypto_rng *kcapi_rng = lrng_drng_info->kcapi_rng;
+ 	void *hash = lrng_drng_info->lrng_hash;
+ 	u32 digestsize = lrng_kcapi_hash_digestsize(hash);
+-	u8 digest[64] __aligned(8);
++	u8 digest[HASH_MAX_DIGESTSIZE] __aligned(8);
+ 	int ret;
+ 
+ 	if (!hash)
+ 		return crypto_rng_reset(kcapi_rng, inbuf, inbuflen);
+ 
+-	BUG_ON(digestsize > sizeof(digest));
+-
+ 	ret = lrng_kcapi_hash_init(shash, hash) ?:
+ 	      lrng_kcapi_hash_update(shash, inbuf, inbuflen) ?:
+ 	      lrng_kcapi_hash_final(shash, digest);
+diff --git a/drivers/char/lrng/lrng_numa.c b/drivers/char/lrng/lrng_numa.c
+index fbfb40a5f..f13ee0314 100644
+--- a/drivers/char/lrng/lrng_numa.c
++++ b/drivers/char/lrng/lrng_numa.c
+@@ -16,6 +16,7 @@ static struct lrng_drng **lrng_drng __read_mostly = NULL;
+ 
+ struct lrng_drng **lrng_drng_instances(void)
+ {
++	/* counterpart to cmpxchg_release in _lrng_drngs_numa_alloc */
+ 	return smp_load_acquire(&lrng_drng);
+ }
+ 
+diff --git a/drivers/char/lrng/lrng_proc.c b/drivers/char/lrng/lrng_proc.c
+index b48094c32..9d5b3153e 100644
+--- a/drivers/char/lrng/lrng_proc.c
++++ b/drivers/char/lrng/lrng_proc.c
+@@ -86,6 +86,7 @@ static int lrng_drng_reseed_max_min;
+ void lrng_proc_update_max_write_thresh(u32 new_digestsize)
+ {
+ 	lrng_max_write_thresh = (int)new_digestsize;
++	/* Ensure that changes to the global variable are visible */
+ 	mb();
+ }
+ 
+diff --git a/drivers/char/lrng/lrng_selftest.c b/drivers/char/lrng/lrng_selftest.c
+index 4412ebd2a..7f65c047e 100644
+--- a/drivers/char/lrng/lrng_selftest.c
++++ b/drivers/char/lrng/lrng_selftest.c
+@@ -196,7 +196,8 @@ static unsigned int lrng_hash_selftest(void)
+ 	static const u8 hash_input[] = { 0x61, 0x62, 0x63 }; /* "abc" */
+ 	u8 digest[sizeof(lrng_hash_selftest_result)] __aligned(sizeof(u32));
+ 
+-	BUG_ON(sizeof(digest) != crypto_cb->lrng_hash_digestsize(NULL));
++	if (sizeof(digest) != crypto_cb->lrng_hash_digestsize(NULL))
++		return LRNG_SEFLTEST_ERROR_HASH;
+ 
+ 	if (!crypto_cb->lrng_hash_init(shash, NULL) &&
+ 	    !crypto_cb->lrng_hash_update(shash, hash_input,
+-- 
+2.34.1.75.gabe6bb3905
 

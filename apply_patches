@@ -1,12 +1,12 @@
-git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v7-sep/0001-net-sched-allow-configuring-cake-qdisc-as-default.patch
-git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v7-sep/0006-tty-Allow-setting-the-number-of-available-virtual-TT.patch
-git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v7-sep/0008-nvme-don-t-memset-the-normal-read-write-command.patch
-git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v7-sep/0010-mm-Fully-disable-watermark-boosting-when-it-isn-t-us.patch
-git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v7-sep/0012-mm-Disable-watermark-boosting-by-default.patch
-git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v7-sep/0013-Disable-stack-conservation-for-GCC.patch
-git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v7-sep/0014-vfs-keep-inodes-with-page-cache-off-the-inode-shrink.patch
-git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v7-sep/0016-x86-csum-Fix-compilation-error-for-UM.patch
-git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v7-sep/0017-x86-csum-Fix-initial-seed-for-odd-buffers.patch
+git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0001-net-sched-allow-configuring-cake-qdisc-as-default.patch
+git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0006-tty-Allow-setting-the-number-of-available-virtual-TT.patch
+git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0008-nvme-don-t-memset-the-normal-read-write-command.patch
+git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0010-mm-Fully-disable-watermark-boosting-when-it-isn-t-us.patch
+git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0012-mm-Disable-watermark-boosting-by-default.patch
+git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0013-Disable-stack-conservation-for-GCC.patch
+git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0014-vfs-keep-inodes-with-page-cache-off-the-inode-shrink.patch
+git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0016-x86-csum-Fix-compilation-error-for-UM.patch
+git am /aot/build/clearlinux/packages/linux/patches/fixes-miscellaneous-v8-sep/0017-x86-csum-Fix-initial-seed-for-odd-buffers.patch
 
 git am /aot/build/clearlinux/packages/linux/patches/uksm-patches/0001-UKSM-for-5.15.patch
 
@@ -32,8 +32,6 @@ git am /aot/build/clearlinux/packages/linux/patches/cpu-patches-v2-sep/more-uarc
 git am /aot/build/clearlinux/packages/linux/patches/cpu-patches-v2-sep/0002-init-Kconfig-enable-O3-for-all-arches.patch
 git am /aot/build/clearlinux/packages/linux/patches/cpu-patches-v2-sep/0003-init-Kconfig-add-O1-flag.patch
 git am /aot/build/clearlinux/packages/linux/patches/cpu-patches-v2-sep/0004-Makefile-Turn-off-loop-vectorization-for-GCC-O3-opti.patch
-
-git am /aot/build/clearlinux/packages/linux/patches/lrng-upstream-patches/0001-lrng-patches.patch
 
 git am /aot/build/clearlinux/packages/linux/patches/bfq-lucjan-v4-all/0001-bfq-lucjan.patch
 
@@ -80,3 +78,5 @@ git am /aot/build/clearlinux/packages/linux/patches/net/0021-tcp-defer-skb-freei
 git am /aot/build/clearlinux/packages/linux/patches/net/0022-tcp-check-local-var-timeo-before-socket-fields-in-on.patch
 git am /aot/build/clearlinux/packages/linux/patches/net/0023-tcp-do-not-call-tcp_cleanup_rbuf-if-we-have-a-backlo.patch
 git am /aot/build/clearlinux/packages/linux/patches/net/0024-net-move-early-demux-fields-close-to-sk_refcnt.patch
+
+git am /aot/build/clearlinux/packages/linux/patches/lrng-upstream-patches-v2/0001-lrng-patches.patch
