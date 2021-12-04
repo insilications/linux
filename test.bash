@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 cat config | grep CONFIG_ACPI_TABLE_UPGRADE
+cat config | grep CONFIG_EFI_TEST
+cat config | grep CONFIG_EFI_STUB
+cat config | grep CONFIG_EFI=
+cat config | grep CONFIG_EFIVAR_FS
+cat config | grep CONFIG_EFI_VARS
 cat config | grep CONFIG_FORTIFY_SOURCE
 cat config | grep CONFIG_HARDENED_USERCOPY_FALLBACK
 cat config | grep CONFIG_HARDENED_USERCOPY
@@ -42,12 +47,7 @@ cat config | grep CONFIG_DYNAMIC_DEBUG
 cat config | grep CONFIG_FRAME_POINTER
 cat config | grep CONFIG_STACK_VALIDATION
 cat config | grep CONFIG_STACKTRACE
-cat config | grep CONFIG_EFI_TEST
 cat config | grep CONFIG_DMI_SYSFS
 cat config | grep CONFIG_CGROUP_FREEZER
 cat config | grep CONFIG_FRAMEBUFFER_CONSOLE
-cat config | grep CONFIG_EFI_STUB
-cat config | grep CONFIG_EFI=
 cat config | grep CONFIG_RELOCATABLE
-cat config | grep CONFIG_EFIVAR_FS
-cat config | grep CONFIG_EFI_VARS
