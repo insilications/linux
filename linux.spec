@@ -6,7 +6,7 @@
 
 Name:           linux
 Version:        5.15.6
-Release:        1500
+Release:        1600
 License:        GPL-2.0
 Summary:        The Linux kernel
 Url:            http://www.kernel.org/
@@ -105,7 +105,7 @@ Patch0128: 0128-don-t-report-an-error-if-PowerClamp-run-on-other-CPU.patch
 Patch0129: raid6.patch
 Patch0130: itmt_epb.patch
 Patch0131: mm-wakeups.patch
-Patch0132: itmt2.patch
+#Patch0132: itmt2.patch
 Patch0133: percpu-minsize.patch
 #Serie.end
 
@@ -203,7 +203,7 @@ Linux kernel build files
 %patch0129 -p1
 %patch0130 -p1
 %patch0131 -p1
-%patch0132 -p1
+#%patch0132 -p1
 %patch0133 -p1
 #Serie.patch.end
 

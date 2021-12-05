@@ -80,3 +80,6 @@ git am /aot/build/clearlinux/packages/linux/patches/net/0021-tcp-defer-skb-freei
 git am /aot/build/clearlinux/packages/linux/patches/net/0022-tcp-check-local-var-timeo-before-socket-fields-in-on.patch
 git am /aot/build/clearlinux/packages/linux/patches/net/0023-tcp-do-not-call-tcp_cleanup_rbuf-if-we-have-a-backlo.patch
 git am /aot/build/clearlinux/packages/linux/patches/net/0024-net-move-early-demux-fields-close-to-sk_refcnt.patch
+
+git am /aot/build/clearlinux/packages/linux/patches/pstate/0001-intel_pstate-master.patch
+git am /aot/build/clearlinux/packages/linux/patches/pstate/0002-thermal-intel-master.patch
