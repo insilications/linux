@@ -6,7 +6,7 @@
 
 Name:           linux
 Version:        5.15.6
-Release:        1600
+Release:        1800
 License:        GPL-2.0
 Summary:        The Linux kernel
 Url:            http://www.kernel.org/
