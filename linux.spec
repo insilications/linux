@@ -5,13 +5,13 @@
 #
 
 Name:           linux
-Version:        5.16.18
+Version:        5.19.0
 Release:        1840
 License:        GPL-2.0
 Summary:        The Linux kernel
 Url:            http://www.kernel.org/
 Group:          kernel
-Source0:        file:///insilications/apps/linux-5.16.18.tar.gz
+Source0:        file:///insilications/apps/linux-5.19.0.tar.gz
 Source1:        config
 Source2:        cmdline
 
@@ -230,7 +230,7 @@ BuildKernel() {
     cp config ${Target}/.config
 
     make O=${Target} -s ARCH=${Arch} olddefconfig
-    make O=${Target} ARCH=${Arch} V=2 KCFLAGS="-O2 -march=native -mtune=native -Wl,-O2 -falign-functions=32 -mno-vzeroupper -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe" CONFIG_DEBUG_SECTION_MISMATCH=y -j16
+    make O=${Target} -s ARCH=${Arch} V=2 KCFLAGS="-O2 -march=native -mtune=native -Wl,-O2 -falign-functions=32 -mno-vzeroupper -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe" CONFIG_DEBUG_SECTION_MISMATCH=y -j16
 }
 
 BuildKernel %{ktarget}
