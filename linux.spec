@@ -236,7 +236,7 @@ BuildKernel() {
     cp config ${Target}/.config
 
     make O=${Target} -s ARCH=${Arch} olddefconfig
-    make O=${Target} -s ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-O3 -march=native -Wl,-O2 -falign-functions=32 -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CONFIG_DEBUG_SECTION_MISMATCH=y %{?_smp_mflags} %{?sparse_mflags}
+    make O=${Target} -s ARCH=${Arch} V=1 VERBOSE=1 KCFLAGS="-O3 -march=native -Wl,-O2 -falign-functions=32 -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CONFIG_DEBUG_SECTION_MISMATCH=y -j14
 }
 
 BuildKernel %{ktarget}
@@ -277,7 +277,7 @@ InstallKernel() {
     mkdir -p %{buildroot}/usr/lib/modules
     make O=${Target} -s ARCH=${Arch} INSTALL_MOD_PATH=%{buildroot}/usr modules_install
 
-    make O=${Target} ARCH=${Arch} INSTALL_MOD_PATH=%{buildroot}/usr V=1 VERBOSE=1 KCFLAGS="-O3 -march=native -Wl,-O2 -falign-functions=32 -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" %{?_smp_mflags} modules_install
+    make O=${Target} ARCH=${Arch} INSTALL_MOD_PATH=%{buildroot}/usr V=1 VERBOSE=1 KCFLAGS="-O3 -march=native -Wl,-O2 -falign-functions=32 -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" -j14 modules_install
 
     make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 KCFLAGS="-O3 -march=native -Wl,-O2 -falign-functions=32 -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CFLAGS+="-O3 -march=native -Wl,-O2 -falign-functions=32 -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" CXXFLAGS+="-O3 -march=native -Wl,-O2 -falign-functions=32 -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -fipa-pta --param=max-isl-operations=0 -pipe" -j1 tools/acpi tools/acpi_install || :
 
