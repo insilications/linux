@@ -6,7 +6,7 @@
 
 Name:           linux
 Version:        5.16.18
-Release:        1838
+Release:        1840
 License:        GPL-2.0
 Summary:        The Linux kernel
 Url:            http://www.kernel.org/
@@ -210,8 +210,11 @@ cp %{SOURCE1} .
 
 %build
 BuildKernel() {
+    Target=$1
+    Arch=x86_64
+    ExtraVer="-%{release}.${Target}"
+
     export V=2
-    export VERBOSE=2
     export AR=/usr/bin/gcc-ar
     export RANLIB=/usr/bin/gcc-ranlib
     export NM=/usr/bin/gcc-nm
@@ -220,10 +223,6 @@ BuildKernel() {
     unset LDFLAGS
     export CFLAGS="-O2 -march=native -mtune=native -Wl,-O2 -falign-functions=32 -mno-vzeroupper -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe"
     export KCFLAGS="-O2 -march=native -mtune=native -Wl,-O2 -falign-functions=32 -mno-vzeroupper -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe"
-
-    Target=$1
-    Arch=x86_64
-    ExtraVer="-%{release}.${Target}"
 
     perl -p -i -e "s/^EXTRAVERSION.*/EXTRAVERSION = ${ExtraVer}/" Makefile
 
@@ -231,7 +230,7 @@ BuildKernel() {
     cp config ${Target}/.config
 
     make O=${Target} -s ARCH=${Arch} olddefconfig
-    make O=${Target} ARCH=${Arch} V=2 KCFLAGS="-O2 -march=native -mtune=native -Wl,-O2 -falign-functions=32 -mno-vzeroupper -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe" CFLAGS="-O2 -march=native -mtune=native -Wl,-O2 -falign-functions=32 -mno-vzeroupper -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe" CONFIG_DEBUG_SECTION_MISMATCH=y -j15
+    make O=${Target} ARCH=${Arch} V=2 KCFLAGS="-O2 -march=native -mtune=native -Wl,-O2 -falign-functions=32 -mno-vzeroupper -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe" CONFIG_DEBUG_SECTION_MISMATCH=y -j16
 }
 
 BuildKernel %{ktarget}
@@ -239,8 +238,13 @@ BuildKernel %{ktarget}
 %install
 
 InstallKernel() {
+    Target=$1
+    Kversion=$2
+    Arch=x86_64
+    KernelDir=%{buildroot}/usr/lib/kernel
+    DevDir=%{buildroot}/usr/lib/modules/${Kversion}/build
+
     export V=2
-    export VERBOSE=2
     export AR=/usr/bin/gcc-ar
     export RANLIB=/usr/bin/gcc-ranlib
     export NM=/usr/bin/gcc-nm
@@ -249,12 +253,6 @@ InstallKernel() {
     unset LDFLAGS
     export CFLAGS="-O2 -march=native -mtune=native -Wl,-O2 -falign-functions=32 -mno-vzeroupper -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe"
     export KCFLAGS="-O2 -march=native -mtune=native -Wl,-O2 -falign-functions=32 -mno-vzeroupper -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe"
-
-    Target=$1
-    Kversion=$2
-    Arch=x86_64
-    KernelDir=%{buildroot}/usr/lib/kernel
-    DevDir=%{buildroot}/usr/lib/modules/${Kversion}/build
 
     mkdir   -p ${KernelDir}
     install -m 644 ${Target}/.config    ${KernelDir}/config-${Kversion}
@@ -265,7 +263,7 @@ InstallKernel() {
     chmod 755 ${KernelDir}/org.clearlinux.${Target}.%{version}-%{release}
 
     mkdir -p %{buildroot}/usr/lib/modules
-    make O=${Target} -s ARCH=${Arch} INSTALL_MOD_PATH=%{buildroot}/usr V=2 KCFLAGS="-O2 -march=native -mtune=native -Wl,-O2 -falign-functions=32 -mno-vzeroupper -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe" CFLAGS="-O2 -march=native -mtune=native -Wl,-O2 -falign-functions=32 -mno-vzeroupper -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe" -j15 modules_install
+    make O=${Target} ARCH=${Arch} INSTALL_MOD_PATH=%{buildroot}/usr V=2 modules_install
 
     make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 KCFLAGS="-O2 -march=native -Wl,-O2 -falign-functions=32 -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe" CFLAGS+="-O2 -march=native -Wl,-O2 -falign-functions=32 -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe" CXXFLAGS+="-O2 -march=native -Wl,-O2 -falign-functions=32 -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe" -j1 tools/acpi tools/acpi_install || :
 
