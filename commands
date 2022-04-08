@@ -27,7 +27,7 @@ make ARCH=x86_64 menuconfig
 make ARCH=x86_64 mrproper
 
 scripts/diffconfig .config .config.old
-
+scripts/diffconfig .config.old .config
 
 
 CONFIG_PM_TRACE=y
