@@ -1,0 +1,25 @@
+From ea647c0f089b33d7b96ba5cf8633968ab89fed3b Mon Sep 17 00:00:00 2001
+From: Arjan van de Ven <arjan@linux.intel.com>
+Date: Mon, 14 Mar 2016 11:22:09 -0600
+Subject: [PATCH 03/34] silence rapl
+
+---
+ drivers/powercap/intel_rapl_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
+index a9c99d9e8..8b288a554 100644
+--- a/drivers/powercap/intel_rapl_common.c
++++ b/drivers/powercap/intel_rapl_common.c
+@@ -1514,7 +1514,7 @@ static int __init rapl_init(void)
+ 
+ 	id = x86_match_cpu(rapl_ids);
+ 	if (!id) {
+-		pr_err("driver does not support CPU family %d model %d\n",
++		pr_info("driver does not support CPU family %d model %d\n",
+ 		       boot_cpu_data.x86, boot_cpu_data.x86_model);
+ 
+ 		return -ENODEV;
+-- 
+2.36.0
+

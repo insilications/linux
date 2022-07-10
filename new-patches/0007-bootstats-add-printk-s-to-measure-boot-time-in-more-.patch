@@ -1,0 +1,32 @@
+From 9f556196d7d3a4f44f6dfd9a425ad76c430eb834 Mon Sep 17 00:00:00 2001
+From: Arjan van de Ven <arjan@linux.intel.com>
+Date: Wed, 11 Feb 2015 16:05:23 -0600
+Subject: [PATCH 07/34] bootstats: add printk's to measure boot time in more
+ detail
+
+Few distro-tweaks to add printk's to visualize boot time better
+
+Author:    Arjan van de Ven <arjan@linux.intel.com>
+
+Signed-off-by: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
+---
+ arch/x86/kernel/alternative.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
+index e257f6c80..5f4048dd2 100644
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -865,7 +865,9 @@ void __init alternative_instructions(void)
+ 	 * Then patch alternatives, such that those paravirt calls that are in
+ 	 * alternatives can be overwritten by their immediate fragments.
+ 	 */
++	printk("clr: Applying alternatives\n");
+ 	apply_alternatives(__alt_instructions, __alt_instructions_end);
++	printk("clr: Applying alternatives done\n");
+ 
+ 	apply_ibt_endbr(__ibt_endbr_seal, __ibt_endbr_seal_end);
+ 
+-- 
+2.36.0
+

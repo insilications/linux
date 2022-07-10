@@ -1,0 +1,62 @@
+From 9f5aad67ecdb393afa83e96c9d1c8611ebc3d768 Mon Sep 17 00:00:00 2001
+From: Francisco Boni Neto <boboniboni@gmail.com>
+Date: Sun, 10 Jul 2022 09:08:19 -0300
+Subject: [PATCH 28/34] scale
+
+---
+ include/linux/ipc_namespace.h | 5 +++--
+ include/linux/page_counter.h  | 1 +
+ mm/memcontrol.c               | 2 +-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/include/linux/ipc_namespace.h b/include/linux/ipc_namespace.h
+index e3e8c8662..9209856b6 100644
+--- a/include/linux/ipc_namespace.h
++++ b/include/linux/ipc_namespace.h
+@@ -36,8 +36,6 @@ struct ipc_namespace {
+ 	unsigned int	msg_ctlmax;
+ 	unsigned int	msg_ctlmnb;
+ 	unsigned int	msg_ctlmni;
+-	atomic_t	msg_bytes;
+-	atomic_t	msg_hdrs;
+ 
+ 	size_t		shm_ctlmax;
+ 	size_t		shm_ctlall;
+@@ -77,6 +75,9 @@ struct ipc_namespace {
+ 	struct llist_node mnt_llist;
+ 
+ 	struct ns_common ns;
++	int padding[16];
++	atomic_t	msg_bytes;
++	atomic_t	msg_hdrs;
+ } __randomize_layout;
+ 
+ extern struct ipc_namespace init_ipc_ns;
+diff --git a/include/linux/page_counter.h b/include/linux/page_counter.h
+index 679591301..685193470 100644
+--- a/include/linux/page_counter.h
++++ b/include/linux/page_counter.h
+@@ -8,6 +8,7 @@
+ 
+ struct page_counter {
+ 	atomic_long_t usage;
++	unsigned long padding[7];
+ 	unsigned long min;
+ 	unsigned long low;
+ 	unsigned long high;
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 618c366a2..b6888b048 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -625,7 +625,7 @@ static inline void memcg_rstat_updated(struct mem_cgroup *memcg, int val)
+ 	cgroup_rstat_updated(memcg->css.cgroup, smp_processor_id());
+ 
+ 	x = __this_cpu_add_return(stats_updates, abs(val));
+-	if (x > MEMCG_CHARGE_BATCH) {
++	if (x > MEMCG_CHARGE_BATCH * 128) {
+ 		atomic_add(x / MEMCG_CHARGE_BATCH, &stats_flush_threshold);
+ 		__this_cpu_write(stats_updates, 0);
+ 	}
+-- 
+2.36.0
+
