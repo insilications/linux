@@ -1,32 +1,33 @@
-/aot/build/clearlinux/packages/linux/0101-i8042-decrease-debug-message-level-to-info.patch
-/aot/build/clearlinux/packages/linux/0102-increase-the-ext4-default-commit-age.patch
-/aot/build/clearlinux/packages/linux/0103-silence-rapl.patch
-/aot/build/clearlinux/packages/linux/0104-pci-pme-wakeups.patch
-/aot/build/clearlinux/packages/linux/0105-ksm-wakeups.patch
-/aot/build/clearlinux/packages/linux/0106-intel_idle-tweak-cpuidle-cstates.patch
-/aot/build/clearlinux/packages/linux/0107-bootstats-add-printk-s-to-measure-boot-time-in-more-.patch
-/aot/build/clearlinux/packages/linux/0108-smpboot-reuse-timer-calibration.patch
-/aot/build/clearlinux/packages/linux/0109-initialize-ata-before-graphics.patch
-/aot/build/clearlinux/packages/linux/0111-ipv4-tcp-allow-the-memory-tuning-for-tcp-to-go-a-lit.patch
-/aot/build/clearlinux/packages/linux/0112-init-wait-for-partition-and-retry-scan.patch
-/aot/build/clearlinux/packages/linux/0113-print-fsync-count-for-bootchart.patch
-/aot/build/clearlinux/packages/linux/0114-add-boot-option-to-allow-unsigned-modules.patch
-/aot/build/clearlinux/packages/linux/0115-enable-stateless-firmware-loading.patch
-/aot/build/clearlinux/packages/linux/0116-migrate-some-systemd-defaults-to-the-kernel-defaults.patch
-/aot/build/clearlinux/packages/linux/0117-xattr-allow-setting-user.-attributes-on-symlinks-by-.patch
-/aot/build/clearlinux/packages/linux/0118-add-scheduler-turbo3-patch.patch
-/aot/build/clearlinux/packages/linux/0119-use-lfence-instead-of-rep-and-nop.patch
-/aot/build/clearlinux/packages/linux/0120-do-accept-in-LIFO-order-for-cache-efficiency.patch
-/aot/build/clearlinux/packages/linux/0121-locking-rwsem-spin-faster.patch
-/aot/build/clearlinux/packages/linux/0122-ata-libahci-ignore-staggered-spin-up.patch
-/aot/build/clearlinux/packages/linux/0123-print-CPU-that-faults.patch
-/aot/build/clearlinux/packages/linux/0124-x86-microcode-Add-an-option-to-reload-microcode-even.patch
-/aot/build/clearlinux/packages/linux/0125-nvme-workaround.patch
-/aot/build/clearlinux/packages/linux/0126-don-t-report-an-error-if-PowerClamp-run-on-other-CPU.patch
-/aot/build/clearlinux/packages/linux/0127-lib-raid6-add-patch.patch
-/aot/build/clearlinux/packages/linux/0128-itmt_epb-use-epb-to-scale-itmt.patch
-/aot/build/clearlinux/packages/linux/0130-itmt2-ADL-fixes.patch
-/aot/build/clearlinux/packages/linux/0131-add-a-per-cpu-minimum-high-watermark-an-tune-batch-s.patch
-/aot/build/clearlinux/packages/linux/0132-prezero-20220308.patch
-/aot/build/clearlinux/packages/linux/0133-novector.patch
-/aot/build/clearlinux/packages/linux/scale.patch
+ppit /aot/build/clearlinux/packages/linux/0101-i8042-decrease-debug-message-level-to-info.patch
+ppit /aot/build/clearlinux/packages/linux/0102-increase-the-ext4-default-commit-age.patch
+ppit /aot/build/clearlinux/packages/linux/0103-silence-rapl.patch
+ppit /aot/build/clearlinux/packages/linux/0104-pci-pme-wakeups.patch
+ppit /aot/build/clearlinux/packages/linux/0105-ksm-wakeups.patch
+ppit /aot/build/clearlinux/packages/linux/0106-intel_idle-tweak-cpuidle-cstates.patch
+ppit /aot/build/clearlinux/packages/linux/0107-bootstats-add-printk-s-to-measure-boot-time-in-more-.patch
+ppit /aot/build/clearlinux/packages/linux/0108-smpboot-reuse-timer-calibration.patch
+ppit /aot/build/clearlinux/packages/linux/0109-initialize-ata-before-graphics.patch
+ppit /aot/build/clearlinux/packages/linux/0111-ipv4-tcp-allow-the-memory-tuning-for-tcp-to-go-a-lit.patch
+ppit /aot/build/clearlinux/packages/linux/0112-init-wait-for-partition-and-retry-scan.patch
+ppit /aot/build/clearlinux/packages/linux/0113-print-fsync-count-for-bootchart.patch
+# ppit /aot/build/clearlinux/packages/linux/0114-add-boot-option-to-allow-unsigned-modules.patch
+ppit /aot/build/clearlinux/packages/linux/0115-enable-stateless-firmware-loading.patch
+ppit /aot/build/clearlinux/packages/linux/0116-migrate-some-systemd-defaults-to-the-kernel-defaults.patch
+ppit /aot/build/clearlinux/packages/linux/0117-xattr-allow-setting-user.-attributes-on-symlinks-by-.patch
+ppit /aot/build/clearlinux/packages/linux/0118-add-scheduler-turbo3-patch.patch
+ppit /aot/build/clearlinux/packages/linux/0119-use-lfence-instead-of-rep-and-nop.patch
+ppit /aot/build/clearlinux/packages/linux/0120-do-accept-in-LIFO-order-for-cache-efficiency.patch
+ppit /aot/build/clearlinux/packages/linux/0121-locking-rwsem-spin-faster.patch
+ppit /aot/build/clearlinux/packages/linux/0122-ata-libahci-ignore-staggered-spin-up.patch
+ppit /aot/build/clearlinux/packages/linux/0123-print-CPU-that-faults.patch
+ppit /aot/build/clearlinux/packages/linux/0124-x86-microcode-Add-an-option-to-reload-microcode-even.patch
+ppit /aot/build/clearlinux/packages/linux/0125-nvme-workaround.patch
+ppit /aot/build/clearlinux/packages/linux/0126-don-t-report-an-error-if-PowerClamp-run-on-other-CPU.patch
+ppit /aot/build/clearlinux/packages/linux/0127-lib-raid6-add-patch.patch
+ppit /aot/build/clearlinux/packages/linux/0128-itmt_epb-use-epb-to-scale-itmt.patch
+# ppit /aot/build/clearlinux/packages/linux/0130-itmt2-ADL-fixes.patch
+ppit /aot/build/clearlinux/packages/linux/0131-add-a-per-cpu-minimum-high-watermark-an-tune-batch-s.patch
+# ppit /aot/build/clearlinux/packages/linux/0132-prezero-20220308.patch
+# ppit /aot/build/clearlinux/packages/linux/0133-novector.patch
+ppit /aot/build/clearlinux/packages/linux/scale.patch
+ppit /aot/build/clearlinux/packages/linux/more-uarches-for-kernel-5.17+.patch

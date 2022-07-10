@@ -176,7 +176,7 @@ InstallKernel() {
     chmod 755 ${KernelDir}/org.clearlinux.${Target}.%{version}-%{release}
 
     mkdir -p %{buildroot}/usr/lib/modules
-    make O=${Target} ARCH=${Arch} INSTALL_MOD_PATH=%{buildroot}/usr V=2 modules_install
+    make O=${Target} -s ARCH=${Arch} INSTALL_MOD_PATH=%{buildroot}/usr V=2 modules_install
 
     make O=${Target} ARCH=${Arch} prefix=/usr WERROR=0 DESTDIR=%{buildroot} mandir=/usr/share/man PYTHON=/usr/bin/python3 PYTHON_CONFIG=/usr/bin/python3-config V=1 VERBOSE=1 KCFLAGS="-O2 -march=native -Wl,-O2 -falign-functions=32 -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe" CFLAGS+="-O2 -march=native -Wl,-O2 -falign-functions=32 -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe" CXXFLAGS+="-O2 -march=native -Wl,-O2 -falign-functions=32 -fdevirtualize-at-ltrans -fgraphite-identity -floop-nest-optimize -floop-block -ftree-loop-distribute-patterns -fno-tree-loop-vectorize -fuse-ld=bfd -fno-math-errno -fno-trapping-math -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -pipe" -j1 tools/acpi tools/acpi_install || :
 
