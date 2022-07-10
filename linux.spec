@@ -69,48 +69,6 @@ Requires: linux-license = %{version}-%{release}
 %define debug_package %{nil}
 %define __strip /bin/true
 
-#cve.start cve patches from 0001 to 050
-#cve.end
-
-#mainline: Mainline patches, upstream backport and fixes from 0051 to 0099
-#mainline.end
-
-#Serie.clr 01XX: Clear Linux patches
-Patch0101: 0101-i8042-decrease-debug-message-level-to-info.patch
-Patch0102: 0102-increase-the-ext4-default-commit-age.patch
-Patch0103: 0103-silence-rapl.patch
-Patch0104: 0104-pci-pme-wakeups.patch
-Patch0105: 0105-ksm-wakeups.patch
-Patch0106: 0106-intel_idle-tweak-cpuidle-cstates.patch
-Patch0107: 0107-bootstats-add-printk-s-to-measure-boot-time-in-more-.patch
-Patch0108: 0108-smpboot-reuse-timer-calibration.patch
-Patch0109: 0109-initialize-ata-before-graphics.patch
-Patch0110: 0110-give-rdrand-some-credit.patch
-Patch0111: 0111-ipv4-tcp-allow-the-memory-tuning-for-tcp-to-go-a-lit.patch
-Patch0112: 0112-init-wait-for-partition-and-retry-scan.patch
-Patch0114: 0114-add-boot-option-to-allow-unsigned-modules.patch
-Patch0115: 0115-enable-stateless-firmware-loading.patch
-Patch0116: 0116-migrate-some-systemd-defaults-to-the-kernel-defaults.patch
-Patch0117: 0117-xattr-allow-setting-user.-attributes-on-symlinks-by-.patch
-Patch0118: 0118-add-scheduler-turbo3-patch.patch
-Patch0119: 0119-use-lfence-instead-of-rep-and-nop.patch
-Patch0120: 0120-do-accept-in-LIFO-order-for-cache-efficiency.patch
-Patch0121: 0121-locking-rwsem-spin-faster.patch
-Patch0122: 0122-ata-libahci-ignore-staggered-spin-up.patch
-Patch0123: 0123-print-CPU-that-faults.patch
-Patch0124: 0124-x86-microcode-Force-update-a-uCode-even-if-the-rev-i.patch
-#Patch0125: 0125-x86-microcode-echo-2-reload-to-force-load-ucode.patch
-Patch0126: 0126-fix-bug-in-ucode-force-reload-revision-check.patch
-Patch0128: 0128-don-t-report-an-error-if-PowerClamp-run-on-other-CPU.patch
-Patch0129: raid6.patch
-Patch0130: itmt_epb.patch
-Patch0131: mm-wakeups.patch
-Patch0132: itmt2.patch
-Patch0133: percpu-minsize.patch
-Patch0134: prezero.patch
-#Serie.end
-
-#backports
 
 %description
 The Linux kernel.
@@ -159,52 +117,7 @@ Requires:       linux-license = %{version}-%{release}
 Linux kernel build files
 
 %prep
-%setup -q -n linux-5.16.18
-
-#cve.patch.start cve patches
-#cve.patch.end
-
-#mainline.patch.start Mainline patches, upstream backport and fixes
-#mainline.patch.end
-
-#Serie.patch.start Clear Linux patches
-%patch0101 -p1
-%patch0102 -p1
-%patch0103 -p1
-%patch0104 -p1
-%patch0105 -p1
-%patch0106 -p1
-%patch0107 -p1
-%patch0108 -p1
-%patch0109 -p1
-%patch0110 -p1
-%patch0111 -p1
-%patch0112 -p1
-%patch0114 -p1
-%patch0115 -p1
-%patch0116 -p1
-%patch0117 -p1
-%patch0118 -p1
-%patch0119 -p1
-%patch0120 -p1
-%patch0121 -p1
-%patch0122 -p1
-%patch0123 -p1
-%patch0124 -p1
-#%patch0125 -p1
-%patch0126 -p1
-%patch0128 -p1
-%patch0129 -p1
-%patch0130 -p1
-%patch0131 -p1
-%patch0132 -p1
-%patch0133 -p1
-%patch0134 -p1
-#Serie.patch.end
-
-# backports
-
-
+%setup -q -n linux-5.19.0
 
 cp %{SOURCE1} .
 
