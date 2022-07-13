@@ -1,7 +1,7 @@
 From 314eb4588fd29496c64d221ecc527cb2bab8e861 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan.van.de.ven@intel.com>
 Date: Tue, 16 Nov 2021 17:39:25 +0000
-Subject: [PATCH 26/34] itmt_epb: use epb to scale itmt
+Subject: [PATCH 26/35] itmt_epb: use epb to scale itmt
 
 ---
  arch/x86/include/asm/topology.h |  1 +

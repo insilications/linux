@@ -1,7 +1,7 @@
 From cf2cb82f450bbd017aaf42e1591959dac00f138d Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Thu, 13 Dec 2018 01:00:49 +0000
-Subject: [PATCH 18/34] do accept() in LIFO order for cache efficiency
+Subject: [PATCH 18/35] do accept() in LIFO order for cache efficiency
 
 ---
  include/linux/wait.h            |  2 ++

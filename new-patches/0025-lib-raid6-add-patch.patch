@@ -1,7 +1,7 @@
 From f1ddc0f63120aeb96ff3b3b3739eb56478a93a74 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan.van.de.ven@intel.com>
 Date: Mon, 27 Sep 2021 17:43:01 +0000
-Subject: [PATCH 25/34] lib/raid6: add patch
+Subject: [PATCH 25/35] lib/raid6: add patch
 
 ---
  lib/raid6/algos.c | 4 +++-

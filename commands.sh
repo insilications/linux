@@ -27,7 +27,6 @@ scripts/kconfig/merge_config.sh ARCH=x86_64
 make ARCH=x86_64 menuconfig
 make ARCH=x86_64 mrproper
 
-scripts/diffconfig .config .config.old
 scripts/diffconfig .config.old .config
 
 
