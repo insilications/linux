@@ -1,4 +1,4 @@
-From 44d79bfcf811200558af0255051f6ec00df7a31d Mon Sep 17 00:00:00 2001
+From ed54444e9da408d33cd6067b2a5feac47fbf2d73 Mon Sep 17 00:00:00 2001
 From: graysky <graysky@archlinux.us>
 Date: Tue, 15 Mar 2022 05:58:43 -0400
 Subject: [PATCH 29/34] more uarches for kernel 5.17+
@@ -536,10 +536,10 @@ index 542377cd4..22b919cdb 100644
  	default "4"
  
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index a74886aed..7ad211379 100644
+index 1f40dad30..9e6094b9e 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
-@@ -143,8 +143,44 @@ else
+@@ -149,8 +149,44 @@ else
          # FIXME - should be integrated in Makefile.cpu (Makefile_32.cpu)
          cflags-$(CONFIG_MK8)		+= -march=k8
          cflags-$(CONFIG_MPSC)		+= -march=nocona

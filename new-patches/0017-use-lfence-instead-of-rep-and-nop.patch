@@ -1,4 +1,4 @@
-From 671589a8b94eb17da6f7e33aa72b1b10699dc64d Mon Sep 17 00:00:00 2001
+From bc07c1605070be30507e1f158cbc3a17e0433baa Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 8 Dec 2018 18:21:32 +0000
 Subject: [PATCH 17/34] use lfence instead of rep and nop

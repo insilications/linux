@@ -1,4 +1,4 @@
-From c2d3e76d4f38a660d9f6d1e517f891b2844d0d0b Mon Sep 17 00:00:00 2001
+From 4e0ac2dedaf9912b0f25304a295508001215187c Mon Sep 17 00:00:00 2001
 From: Francisco Boni Neto <boboniboni@gmail.com>
 Date: Sun, 10 Jul 2022 09:38:58 -0300
 Subject: [PATCH 33/34] mglru
@@ -449,7 +449,7 @@ index 0b6632f18..c46399c05 100644
  static inline bool pud_sect_supported(void)
  {
 diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index be0b95e51..5715111ab 100644
+index e58798f63..aa483042e 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
 @@ -85,6 +85,7 @@ config X86
@@ -512,7 +512,7 @@ index a932d7712..8525f2876 100644
  			      unsigned long addr, pud_t *pudp)
  {
 diff --git a/fs/exec.c b/fs/exec.c
-index 0989fb847..b1fda634e 100644
+index 778123259..39e9bbf86 100644
 --- a/fs/exec.c
 +++ b/fs/exec.c
 @@ -1015,6 +1015,7 @@ static int exec_mmap(struct mm_struct *mm)
@@ -1487,7 +1487,7 @@ index 5da09c742..c966e55ca 100644
  extern struct cgroup_subsys *cgroup_subsys[];
  extern struct list_head cgroup_roots;
 diff --git a/kernel/exit.c b/kernel/exit.c
-index f072959fc..f2d4d48ea 100644
+index 64c938ce3..c9ffa2bdb 100644
 --- a/kernel/exit.c
 +++ b/kernel/exit.c
 @@ -466,6 +466,7 @@ void mm_update_next_owner(struct mm_struct *mm)
@@ -1675,7 +1675,7 @@ index b6888b048..cefb6523d 100644
  	.post_attach = mem_cgroup_move_task,
  	.dfl_cftypes = memory_files,
 diff --git a/mm/memory.c b/mm/memory.c
-index 7a089145c..85d3961c2 100644
+index 4cf7d4b6c..9b08af55e 100644
 --- a/mm/memory.c
 +++ b/mm/memory.c
 @@ -125,18 +125,6 @@ int randomize_va_space __read_mostly =
@@ -1706,7 +1706,7 @@ index 7a089145c..85d3961c2 100644
  		pte_t entry;
  
  		vmf->pte = pte_offset_map_lock(mm, vmf->pmd, addr, &vmf->ptl);
-@@ -5103,6 +5091,27 @@ static inline void mm_account_fault(struct pt_regs *regs,
+@@ -5104,6 +5092,27 @@ static inline void mm_account_fault(struct pt_regs *regs,
  		perf_sw_event(PERF_COUNT_SW_PAGE_FAULTS_MIN, 1, regs, address);
  }
  
@@ -1734,7 +1734,7 @@ index 7a089145c..85d3961c2 100644
  /*
   * By the time we get here, we already hold the mm semaphore
   *
-@@ -5134,11 +5143,15 @@ vm_fault_t handle_mm_fault(struct vm_area_struct *vma, unsigned long address,
+@@ -5135,11 +5144,15 @@ vm_fault_t handle_mm_fault(struct vm_area_struct *vma, unsigned long address,
  	if (flags & FAULT_FLAG_USER)
  		mem_cgroup_enter_user_fault();
  
@@ -1787,7 +1787,7 @@ index 0ae7571e3..68e1511be 100644
  
  #if defined(CONFIG_NUMA_BALANCING) && !defined(LAST_CPUPID_NOT_IN_PAGE_FLAGS)
 diff --git a/mm/rmap.c b/mm/rmap.c
-index 5bcb334cd..dce1a56b0 100644
+index 746c05aca..301ccb4cf 100644
 --- a/mm/rmap.c
 +++ b/mm/rmap.c
 @@ -830,6 +830,12 @@ static bool folio_referenced_one(struct folio *folio,

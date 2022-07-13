@@ -1,4 +1,4 @@
-From 811b71086cf8d38ce7d0426ff06e65a4c52ed7ac Mon Sep 17 00:00:00 2001
+From c5c033c4b89cf0ff7bea98b3f20f63251d73c7ac Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 17 May 2017 01:52:11 +0000
 Subject: [PATCH 11/34] init: wait for partition and retry scan

@@ -1,4 +1,4 @@
-From 713f328d3281f0cd9eb0998352ee23d160ce3641 Mon Sep 17 00:00:00 2001
+From a600b9e8631a9bd0d9520a1e1ef016e694cc79e2 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@redhat.com>
 Date: Wed, 11 Dec 2019 11:46:19 +0100
 Subject: [PATCH 30/34] init/Kconfig: enable -O3 for all arches

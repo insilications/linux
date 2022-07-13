@@ -1,4 +1,4 @@
-From a50075904117b9569817a6ef8b60a7d206a0e5ff Mon Sep 17 00:00:00 2001
+From 36c20658a7f3680ab1b6fb4adcfeb6a0f7c6db96 Mon Sep 17 00:00:00 2001
 From: Ashok Raj <ashok.raj@intel.com>
 Date: Thu, 19 Aug 2021 14:49:47 -0700
 Subject: [PATCH 22/34] x86/microcode: Add an option to reload microcode even

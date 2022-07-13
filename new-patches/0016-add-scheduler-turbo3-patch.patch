@@ -1,4 +1,4 @@
-From a7d3107690f8f64bd991527628ef20b0bb9155e8 Mon Sep 17 00:00:00 2001
+From 7640be07078773786e9fdd9b394be0f0c0fac8b8 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 21 Nov 2018 21:21:44 +0000
 Subject: [PATCH 16/34] add scheduler turbo3 patch

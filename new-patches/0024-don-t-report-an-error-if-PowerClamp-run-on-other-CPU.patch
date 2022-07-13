@@ -1,4 +1,4 @@
-From 937fe14f9c509b1d36e84c0fc89c1c6146b17c16 Mon Sep 17 00:00:00 2001
+From 93992b6f7b27e6de42ea53befc381d2d6eb14839 Mon Sep 17 00:00:00 2001
 From: Alexander Koskovich <zvnexus@outlook.com>
 Date: Wed, 12 Feb 2020 22:47:12 +0000
 Subject: [PATCH 24/34] don't report an error if PowerClamp run on other CPU
