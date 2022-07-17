@@ -25,6 +25,7 @@ clear
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state CPU_IBRS_ENTRY
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state SPECULATION_MITIGATIONS
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state SLS
+./configtool --file /insilications/apps/linux-5.19.0/.config --state ZERO_CALL_USED_REGS
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state HZ_750
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_32B
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B

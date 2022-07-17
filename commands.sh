@@ -22,8 +22,10 @@ LLVM=1 LLVM_IAS=1 CC=clang V=1 VERBOSE=1
 
 
 make ARCH=x86_64 LSMOD=/home/boni/.config/modprobed.db LMC_KEEP="drivers/nvme:fs:drivers/block:crypto:drivers/i3c:drivers/thermal:sound" localmodconfig
+make ARCH=x86_64 LSMOD=/home/boni/.config/modprobed.db localmodconfig
 
-scripts/kconfig/merge_config.sh ARCH=x86_64
+ARCH=x86_64 scripts/kconfig/merge_config.sh
+make ARCH=x86_64 xconfig
 make ARCH=x86_64 menuconfig
 make ARCH=x86_64 mrproper
 
