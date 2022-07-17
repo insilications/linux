@@ -21,7 +21,7 @@ unset LDFLAGS
 LLVM=1 LLVM_IAS=1 CC=clang V=1 VERBOSE=1
 
 
-make ARCH=x86_64 LSMOD=/home/boni/.config/modprobed.db LMC_KEEP="drivers/nvme:fs:drivers/block:crypto:drivers/i3c:drivers/thermal:sound" localmodconfig
+make ARCH=x86_64 LSMOD=/home/boni/.config/modprobed.db LMC_KEEP="sound:fs:drivers/block:crypto:drivers/i3c:drivers/thermal:drivers/nvme" localmodconfig
 make ARCH=x86_64 LSMOD=/home/boni/.config/modprobed.db localmodconfig
 
 ARCH=x86_64 scripts/kconfig/merge_config.sh

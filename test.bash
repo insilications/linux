@@ -7,6 +7,7 @@ clear
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state CONFIG_EFI
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state CONFIG_EFIVAR_FS
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state CONFIG_EFI_VARS
+./configtool --file /insilications/apps/linux-5.19.0/.config --state CONFIG_ACPI_CPPC_LIB
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state CONFIG_FORTIFY_SOURCE
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state CONFIG_HARDENED_USERCOPY_FALLBACK
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state CONFIG_HARDENED_USERCOPY
