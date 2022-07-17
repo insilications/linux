@@ -1,0 +1,51 @@
+From 83cb678ccee8c93d270b2b99d3c39da78ecfb013 Mon Sep 17 00:00:00 2001
+From: Francisco Boni Neto <boboniboni@gmail.com>
+Date: Sun, 17 Jul 2022 06:56:16 -0300
+Subject: [PATCH 36/36] Add CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_32B
+
+---
+ Makefile          |  4 ++++
+ lib/Kconfig.debug | 12 ++++++++++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index faa4880f2..715ce77b0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -940,6 +940,10 @@ ifdef CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B
+ KBUILD_CFLAGS += -falign-functions=64
+ endif
+ 
++ifdef CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_32B
++KBUILD_CFLAGS += -falign-functions=32
++endif
++
+ # arch Makefile may override CC so keep this after arch Makefile is included
+ NOSTDINC_FLAGS += -nostdinc
+ 
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index 2e24db4bf..d79496afb 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -468,6 +468,18 @@ config DEBUG_FORCE_FUNCTION_ALIGN_64B
+ 
+ 	  It is mainly for debug and performance tuning use.
+ 
++config DEBUG_FORCE_FUNCTION_ALIGN_32B
++	bool "Force all function address 32B aligned"
++	depends on EXPERT && (X86_64 || ARM64 || PPC32 || PPC64 || ARC)
++	help
++	  There are cases that a commit from one domain changes the function
++	  address alignment of other domains, and cause magic performance
++	  bump (regression or improvement). Enable this option will help to
++	  verify if the bump is caused by function alignment changes, while
++	  it will slightly increase the kernel size and affect icache usage.
++
++	  It is mainly for debug and performance tuning use.
++
+ #
+ # Select this config option from the architecture Kconfig, if it
+ # is preferred to always offer frame pointers as a config
+-- 
+2.36.0
+

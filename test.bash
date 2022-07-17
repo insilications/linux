@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+clear
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state CONFIG_ACPI_TABLE_UPGRADE
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state CONFIG_DMI_SYSFS
 ./configtool --file /insilications/apps/linux-5.19.0/.config --state CONFIG_EFI_TEST

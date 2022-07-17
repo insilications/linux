@@ -1,7 +1,7 @@
 From ad636a089bb4b2018c96112d671c63283235b8d0 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 11 Nov 2019 23:12:11 +0000
-Subject: [PATCH 23/35] nvme workaround
+Subject: [PATCH 23/36] nvme workaround
 
 ---
  drivers/nvme/host/core.c | 2 +-
