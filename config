@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86_64 5.19.0-rc6 Kernel Configuration
+# Linux/x86_64 5.19.0-rc7 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (Clear Linux OS for Intel Architecture) 12.1.1 20220706 releases/gcc-12.1.0-213-g65941a9109"
 CONFIG_CC_IS_GCC=y
@@ -6180,7 +6180,6 @@ CONFIG_SENSORS_HDAPS=m
 CONFIG_INTEL_ATOMISP2_PDX86=y
 # CONFIG_INTEL_ATOMISP2_LED is not set
 CONFIG_INTEL_ATOMISP2_PM=y
-# CONFIG_INTEL_IFS is not set
 CONFIG_INTEL_SAR_INT1092=y
 CONFIG_INTEL_SKL_INT3472=m
 CONFIG_INTEL_PMC_CORE=m
