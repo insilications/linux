@@ -1,154 +1,9 @@
-#
-# note to self: Linus releases need to be named 5.x.0 not 5.x or various
-# things break
-#
-#
-
-Name:           linux
-Version:        5.19.0
-Release:        1840
-License:        GPL-2.0
-Summary:        The Linux kernel
-Url:            http://www.kernel.org/
-Group:          kernel
-Source0:        file:///insilications/apps/linux-5.19.0.tar.gz
-Source1:        config
-Source2:        cmdline
-
-%define ktarget  native
-%define kversion %{version}-%{release}.%{ktarget}
-
-BuildRequires:  buildreq-kernel
-BuildRequires:  bash
-BuildRequires:  bc
-BuildRequires:  binutils-dev
-BuildRequires:  binutils-staticdev
-BuildRequires:  elfutils
-BuildRequires:  elfutils-dev
-BuildRequires:  kmod
-BuildRequires:  make
-BuildRequires:  openssl
-BuildRequires:  openssl-dev
-BuildRequires:  flex bison
-BuildRequires:  ncurses-dev
-BuildRequires:  slang-dev
-BuildRequires:  libunwind-dev
-BuildRequires:  libunwind-dev32
-BuildRequires:  zlib-dev
-BuildRequires:  xz-dev
-BuildRequires:  numactl-dev
-BuildRequires:  perl
-BuildRequires:  xmlto
-BuildRequires:  asciidoc
-BuildRequires:  util-linux
-BuildRequires:  libxml2-dev
-BuildRequires:  libxslt
-BuildRequires:  docbook-xml
-BuildRequires:  audit-dev
-BuildRequires:  python3-dev
-BuildRequires:  python3-staticdev
-BuildRequires:  python3
-BuildRequires:  babeltrace-dev
-BuildRequires:  zstd-dev
-BuildRequires:  libcap-dev
-BuildRequires:  pciutils-dev
-BuildRequires:  pciutils
-BuildRequires:  libcap-ng
-BuildRequires:  libcap-ng-dev
-BuildRequires:  libcap-dev
-BuildRequires:  libcap
-BuildRequires:  json-c
-BuildRequires:  json-c-dev
-
-Requires: systemd-bin
-Requires: init-rdahead-extras
-Requires: linux-license = %{version}-%{release}
-
-# don't strip .ko files!
 %global __os_install_post %{nil}
 %define debug_package %{nil}
 %define __strip /bin/true
 
-
-%description
-The Linux kernel.
-
-%package extra
-License:        GPL-2.0
-Summary:        The Linux kernel extra files
-Group:          kernel
-Requires:       linux-license = %{version}-%{release}
-
-%description extra
-Linux kernel extra files
-
-%package license
-Summary: license components for the linux package.
-Group: Default
-
-%description license
-license components for the linux package.
-
-%package cpio
-License:        GPL-2.0
-Summary:        cpio file with kenrel modules
-Group:          kernel
-
-%description cpio
-Creates a cpio file with some modules
-
-%package applications
-License:        GPL-2.0
-Summary:        applications compiled by the kernel package
-Group:          kernel
-
-%description applications
-Applications compiled by the kernel package
-
-%package dev
-License:        GPL-2.0
-Summary:        The Linux kernel
-Group:          kernel
-Requires:       linux = %{version}-%{release}
-Requires:       linux-extra = %{version}-%{release}
-Requires:       linux-license = %{version}-%{release}
-
-%description dev
-Linux kernel build files
-
-%prep
-%setup -q -n linux-5.19.0
-
-cp %{SOURCE1} .
-
-%build
-BuildKernel() {
-    Target=$1
-    Arch=x86_64
-    ExtraVer="-%{release}.${Target}"
-
-    export V=2
-    export AR=/usr/bin/gcc-ar
-    export RANLIB=/usr/bin/gcc-ranlib
-    export NM=/usr/bin/gcc-nm
-    unset CFLAGS
-    unset CXXFLAGS
-    unset LDFLAGS
-    export CFLAGS="-O2 -march=skylake -mtune=skylake -Wl,-O2 -falign-functions=32 -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -mno-avx2 -O0 -O2 -fno-tree-vectorize -mpopcnt -pipe"
-    export KCFLAGS="-O2 -march=skylake -mtune=skylake -Wl,-O2 -falign-functions=32 -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -mno-avx2 -O0 -O2 -fno-tree-vectorize -mpopcnt -pipe"
-
-    perl -p -i -e "s/^EXTRAVERSION.*/EXTRAVERSION = ${ExtraVer}/" Makefile
-
-    make O=${Target} -s mrproper
-    cp config ${Target}/.config
-
-    make O=${Target} -s ARCH=${Arch} olddefconfig
-    make O=${Target} ARCH=${Arch} V=2 KCFLAGS="-O2 -march=skylake -mtune=skylake -Wl,-O2 -falign-functions=32 -mprefer-vector-width=256 -fuse-ld=bfd -fno-semantic-interposition -fno-stack-protector -malign-data=cacheline -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -mno-avx2 -O0 -O2 -fno-tree-vectorize -mpopcnt -pipe" -j20
-}
-
-BuildKernel %{ktarget}
-
-%install
+%define ktarget native
+%define kversion %{version}-%{release}.%{ktarget}
 
 InstallKernel() {
     Target=$1
@@ -238,12 +93,12 @@ createCPIO() {
 
     mkdir -p cpiofile${ModDir}/kernel/drivers/input/{serio,keyboard}
     mkdir -p cpiofile${ModDir}/kernel/drivers/hid
-    cp %{buildroot}${ModDir}/kernel/drivers/input/serio/i8042.ko      cpiofile${ModDir}/kernel/drivers/input/serio
-    cp %{buildroot}${ModDir}/kernel/drivers/input/serio/libps2.ko     cpiofile${ModDir}/kernel/drivers/input/serio
-    cp %{buildroot}${ModDir}/kernel/drivers/input/keyboard/atkbd.ko   cpiofile${ModDir}/kernel/drivers/input/keyboard
-    cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-logitech-dj.ko    cpiofile${ModDir}/kernel/drivers/hid
-    cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-logitech-hidpp.ko cpiofile${ModDir}/kernel/drivers/hid
-    cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-apple.ko          cpiofile${ModDir}/kernel/drivers/hid
+    cp %{buildroot}${ModDir}/kernel/drivers/input/serio/i8042.ko      cpiofile${ModDir}/kernel/drivers/input/serio || :
+    cp %{buildroot}${ModDir}/kernel/drivers/input/serio/libps2.ko     cpiofile${ModDir}/kernel/drivers/input/serio || :
+    cp %{buildroot}${ModDir}/kernel/drivers/input/keyboard/atkbd.ko   cpiofile${ModDir}/kernel/drivers/input/keyboard || :
+    cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-logitech-dj.ko    cpiofile${ModDir}/kernel/drivers/hid || :
+    cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-logitech-hidpp.ko cpiofile${ModDir}/kernel/drivers/hid || :
+    cp %{buildroot}${ModDir}/kernel/drivers/hid/hid-apple.ko          cpiofile${ModDir}/kernel/drivers/hid || :
     cp %{buildroot}${ModDir}/modules.order   cpiofile${ModDir}
     cp %{buildroot}${ModDir}/modules.builtin cpiofile${ModDir}
 
@@ -257,44 +112,9 @@ createCPIO() {
 }
 
 InstallKernel %{ktarget} %{kversion}
-
 createCPIO %{ktarget} %{kversion}
 
 rm -rf %{buildroot}/usr/lib/firmware
-
 mkdir -p %{buildroot}/usr/share/package-licenses/linux
 cp COPYING %{buildroot}/usr/share/package-licenses/linux/COPYING
 cp -a LICENSES/* %{buildroot}/usr/share/package-licenses/linux
-
-%files
-%dir /usr/lib/kernel
-%dir /usr/lib/modules/%{kversion}
-/usr/lib/kernel/config-%{kversion}
-/usr/lib/kernel/cmdline-%{kversion}
-/usr/lib/kernel/org.clearlinux.%{ktarget}.%{version}-%{release}
-/usr/lib/kernel/default-%{ktarget}
-/usr/lib/modules/%{kversion}/kernel
-/usr/lib/modules/%{kversion}/modules.*
-
-%files extra
-%dir /usr/lib/kernel
-/usr/lib/kernel/System.map-%{kversion}
-/usr/lib/kernel/vmlinux-%{kversion}
-
-%files applications
-/usr/bin
-/usr/sbin
-/usr/share
-/usr/lib64
-/usr/include
-
-%files license
-%defattr(0644,root,root,0755)
-/usr/share/package-licenses/linux
-
-%files cpio
-/usr/lib/kernel/initrd-org.clearlinux.%{ktarget}.%{version}-%{release}
-
-%files dev
-%defattr(-,root,root)
-/usr/lib/modules/%{kversion}/build
