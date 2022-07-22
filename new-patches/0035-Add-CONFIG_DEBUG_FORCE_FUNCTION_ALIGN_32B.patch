@@ -1,7 +1,7 @@
-From 83cb678ccee8c93d270b2b99d3c39da78ecfb013 Mon Sep 17 00:00:00 2001
+From 79923c9cad13f2631eafbe2a5420bc73925348af Mon Sep 17 00:00:00 2001
 From: Francisco Boni Neto <boboniboni@gmail.com>
 Date: Sun, 17 Jul 2022 06:56:16 -0300
-Subject: [PATCH 36/36] Add CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_32B
+Subject: [PATCH 35/37] Add CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_32B
 
 ---
  Makefile          |  4 ++++
@@ -9,7 +9,7 @@ Subject: [PATCH 36/36] Add CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_32B
  2 files changed, 16 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index faa4880f2..715ce77b0 100644
+index 00fd80c5d..c454bd206 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -940,6 +940,10 @@ ifdef CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B
@@ -47,5 +47,5 @@ index 2e24db4bf..d79496afb 100644
  # Select this config option from the architecture Kconfig, if it
  # is preferred to always offer frame pointers as a config
 -- 
-2.36.0
+2.37.1
 

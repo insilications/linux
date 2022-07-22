@@ -1,7 +1,7 @@
-From cf2cb82f450bbd017aaf42e1591959dac00f138d Mon Sep 17 00:00:00 2001
+From 6c2d45f271ab28b12230486fb98bbe8c6bd2ebbd Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Thu, 13 Dec 2018 01:00:49 +0000
-Subject: [PATCH 18/36] do accept() in LIFO order for cache efficiency
+Subject: [PATCH 18/37] do accept() in LIFO order for cache efficiency
 
 ---
  include/linux/wait.h            |  2 ++
@@ -72,7 +72,7 @@ index 9860bb9a8..c7f045873 100644
  {
  	wq_entry->flags = flags;
 diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 53f5f956d..ecb9a5583 100644
+index eb31c7158..8cefa0b62 100644
 --- a/net/ipv4/inet_connection_sock.c
 +++ b/net/ipv4/inet_connection_sock.c
 @@ -445,7 +445,7 @@ static int inet_csk_wait_for_connect(struct sock *sk, long timeo)
@@ -85,5 +85,5 @@ index 53f5f956d..ecb9a5583 100644
  		release_sock(sk);
  		if (reqsk_queue_empty(&icsk->icsk_accept_queue))
 -- 
-2.36.0
+2.37.1
 

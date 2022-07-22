@@ -1,7 +1,7 @@
-From 55ab88e987bf1d2be9ddd6e159a8d73eeff0e6c8 Mon Sep 17 00:00:00 2001
+From bb8576fb98ae4b73560412a92c59a5118a437d9f Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 11 Feb 2015 16:05:23 -0600
-Subject: [PATCH 07/36] bootstats: add printk's to measure boot time in more
+Subject: [PATCH 07/37] bootstats: add printk's to measure boot time in more
  detail
 
 Few distro-tweaks to add printk's to visualize boot time better
@@ -28,5 +28,5 @@ index d6858533e..daa2e7def 100644
  	apply_ibt_endbr(__ibt_endbr_seal, __ibt_endbr_seal_end);
  
 -- 
-2.36.0
+2.37.1
 

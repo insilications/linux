@@ -1,7 +1,7 @@
-From 430400f969c4a69d91755fc7f704bd230658ffaa Mon Sep 17 00:00:00 2001
+From d34cdaa04b817cfb68b81691cf1d363af10a70b7 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 27 Dec 2018 17:26:15 +0000
-Subject: [PATCH 35/36] LL: kconfig: add 750Hz timer interrupt kernel config
+Subject: [PATCH 34/37] LL: kconfig: add 750Hz timer interrupt kernel config
  option
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
@@ -45,5 +45,5 @@ index 38ef6d068..5f95c9e01 100644
  
  config SCHED_HRTICK
 -- 
-2.36.0
+2.37.1
 

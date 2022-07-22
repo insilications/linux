@@ -1,7 +1,7 @@
-From ed54444e9da408d33cd6067b2a5feac47fbf2d73 Mon Sep 17 00:00:00 2001
+From c1d56f5aa0c6470f9e915bc7b0153bea2532fc81 Mon Sep 17 00:00:00 2001
 From: graysky <graysky@archlinux.us>
 Date: Tue, 15 Mar 2022 05:58:43 -0400
-Subject: [PATCH 29/36] more uarches for kernel 5.17+
+Subject: [PATCH 29/37] more uarches for kernel 5.17+
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -671,5 +671,5 @@ index 75884d2cd..4e6a08d4c 100644
  #define MODULE_PROC_FAMILY "ELAN "
  #elif defined CONFIG_MCRUSOE
 -- 
-2.36.0
+2.37.1
 

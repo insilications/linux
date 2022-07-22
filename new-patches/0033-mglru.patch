@@ -1,7 +1,7 @@
-From 4e0ac2dedaf9912b0f25304a295508001215187c Mon Sep 17 00:00:00 2001
+From 226fba7488d04ec45711ba9e1d55c06c5d53cff1 Mon Sep 17 00:00:00 2001
 From: Francisco Boni Neto <boboniboni@gmail.com>
 Date: Sun, 10 Jul 2022 09:38:58 -0300
-Subject: [PATCH 33/36] mglru
+Subject: [PATCH 33/37] mglru
 
 ---
  Documentation/admin-guide/mm/index.rst        |    1 +
@@ -399,10 +399,10 @@ index 000000000..d7062c6a8
 +Within the eviction, the PID controller uses refaults as the feedback
 +to select types to evict and tiers to protect.
 diff --git a/arch/Kconfig b/arch/Kconfig
-index fcf9a41a4..eaeec187b 100644
+index 71b9272ac..3b06abf99 100644
 --- a/arch/Kconfig
 +++ b/arch/Kconfig
-@@ -1403,6 +1403,14 @@ config DYNAMIC_SIGFRAME
+@@ -1410,6 +1410,14 @@ config DYNAMIC_SIGFRAME
  config HAVE_ARCH_NODE_DEV_GROUP
  	bool
  
@@ -449,7 +449,7 @@ index 0b6632f18..c46399c05 100644
  static inline bool pud_sect_supported(void)
  {
 diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index e58798f63..aa483042e 100644
+index 7fff10e15..fc5990e3a 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
 @@ -85,6 +85,7 @@ config X86
@@ -5368,5 +5368,5 @@ index 592569a89..84a9e0ab0 100644
  	rcu_read_lock();
  	/*
 -- 
-2.36.0
+2.37.1
 

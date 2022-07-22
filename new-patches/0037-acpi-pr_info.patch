@@ -1,0 +1,542 @@
+From 708cf77a5dce93dfe4e9504503683a6c8fc0bc6c Mon Sep 17 00:00:00 2001
+From: Francisco Boni Neto <boboniboni@gmail.com>
+Date: Fri, 22 Jul 2022 17:19:03 -0300
+Subject: [PATCH 37/37] acpi pr_info
+
+---
+ arch/x86/kernel/acpi/cppc.c    |  6 +--
+ drivers/acpi/cppc_acpi.c       | 68 +++++++++++++++++-----------------
+ drivers/cpufreq/intel_pstate.c | 58 ++++++++++++++---------------
+ 3 files changed, 66 insertions(+), 66 deletions(-)
+
+diff --git a/arch/x86/kernel/acpi/cppc.c b/arch/x86/kernel/acpi/cppc.c
+index 8d8752b44..373e188f5 100644
+--- a/arch/x86/kernel/acpi/cppc.c
++++ b/arch/x86/kernel/acpi/cppc.c
+@@ -75,7 +75,7 @@ static void amd_set_max_freq_ratio(void)
+ 
+ 	rc = cppc_get_perf_caps(0, &perf_caps);
+ 	if (rc) {
+-		pr_debug("Could not retrieve perf counters (%d)\n", rc);
++		pr_info("Could not retrieve perf counters (%d)\n", rc);
+ 		return;
+ 	}
+ 
+@@ -83,7 +83,7 @@ static void amd_set_max_freq_ratio(void)
+ 	nominal_perf = perf_caps.nominal_perf;
+ 
+ 	if (!highest_perf || !nominal_perf) {
+-		pr_debug("Could not retrieve highest or nominal performance\n");
++		pr_info("Could not retrieve highest or nominal performance\n");
+ 		return;
+ 	}
+ 
+@@ -91,7 +91,7 @@ static void amd_set_max_freq_ratio(void)
+ 	/* midpoint between max_boost and max_P */
+ 	perf_ratio = (perf_ratio + SCHED_CAPACITY_SCALE) >> 1;
+ 	if (!perf_ratio) {
+-		pr_debug("Non-zero highest/nominal perf values led to a 0 ratio\n");
++		pr_info("Non-zero highest/nominal perf values led to a 0 ratio\n");
+ 		return;
+ 	}
+ 
+diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
+index 3c6d4ef87..b4e6a8c18 100644
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -288,7 +288,7 @@ static int send_pcc_cmd(int pcc_ss_id, u16 cmd)
+ 			time_delta = ktime_ms_delta(ktime_get(),
+ 						    pcc_ss_data->last_mpar_reset);
+ 			if ((time_delta < 60 * MSEC_PER_SEC) && pcc_ss_data->last_mpar_reset) {
+-				pr_debug("PCC cmd for subspace %d not sent due to MPAR limit",
++				pr_info("PCC cmd for subspace %d not sent due to MPAR limit",
+ 					 pcc_ss_id);
+ 				ret = -EIO;
+ 				goto end;
+@@ -349,10 +349,10 @@ static int send_pcc_cmd(int pcc_ss_id, u16 cmd)
+ static void cppc_chan_tx_done(struct mbox_client *cl, void *msg, int ret)
+ {
+ 	if (ret < 0)
+-		pr_debug("TX did not complete: CMD sent:%x, ret:%d\n",
++		pr_info("TX did not complete: CMD sent:%x, ret:%d\n",
+ 				*(u16 *)msg, ret);
+ 	else
+-		pr_debug("TX completed. CMD sent:%x, ret:%d\n",
++		pr_info("TX completed. CMD sent:%x, ret:%d\n",
+ 				*(u16 *)msg, ret);
+ }
+ 
+@@ -380,7 +380,7 @@ static int acpi_get_psd(struct cpc_desc *cpc_ptr, acpi_handle handle)
+ 
+ 	psd = buffer.pointer;
+ 	if (!psd || psd->package.count != 1) {
+-		pr_debug("Invalid _PSD data\n");
++		pr_info("Invalid _PSD data\n");
+ 		goto end;
+ 	}
+ 
+@@ -392,24 +392,24 @@ static int acpi_get_psd(struct cpc_desc *cpc_ptr, acpi_handle handle)
+ 	status = acpi_extract_package(&(psd->package.elements[0]),
+ 		&format, &state);
+ 	if (ACPI_FAILURE(status)) {
+-		pr_debug("Invalid _PSD data for CPU:%d\n", cpc_ptr->cpu_id);
++		pr_info("Invalid _PSD data for CPU:%d\n", cpc_ptr->cpu_id);
+ 		goto end;
+ 	}
+ 
+ 	if (pdomain->num_entries != ACPI_PSD_REV0_ENTRIES) {
+-		pr_debug("Unknown _PSD:num_entries for CPU:%d\n", cpc_ptr->cpu_id);
++		pr_info("Unknown _PSD:num_entries for CPU:%d\n", cpc_ptr->cpu_id);
+ 		goto end;
+ 	}
+ 
+ 	if (pdomain->revision != ACPI_PSD_REV0_REVISION) {
+-		pr_debug("Unknown _PSD:revision for CPU: %d\n", cpc_ptr->cpu_id);
++		pr_info("Unknown _PSD:revision for CPU: %d\n", cpc_ptr->cpu_id);
+ 		goto end;
+ 	}
+ 
+ 	if (pdomain->coord_type != DOMAIN_COORD_TYPE_SW_ALL &&
+ 	    pdomain->coord_type != DOMAIN_COORD_TYPE_SW_ANY &&
+ 	    pdomain->coord_type != DOMAIN_COORD_TYPE_HW_ALL) {
+-		pr_debug("Invalid _PSD:coord_type for CPU:%d\n", cpc_ptr->cpu_id);
++		pr_info("Invalid _PSD:coord_type for CPU:%d\n", cpc_ptr->cpu_id);
+ 		goto end;
+ 	}
+ 
+@@ -631,13 +631,13 @@ static bool is_cppc_supported(int revision, int num_ent)
+ 		expected_num_ent = CPPC_V3_NUM_ENT;
+ 		break;
+ 	default:
+-		pr_debug("Firmware exports unsupported CPPC revision: %d\n",
++		pr_info("Firmware exports unsupported CPPC revision: %d\n",
+ 			revision);
+ 		return false;
+ 	}
+ 
+ 	if (expected_num_ent != num_ent) {
+-		pr_debug("Firmware exports %d entries. Expected: %d for CPPC rev:%d\n",
++		pr_info("Firmware exports %d entries. Expected: %d for CPPC rev:%d\n",
+ 			num_ent, expected_num_ent, revision);
+ 		return false;
+ 	}
+@@ -698,7 +698,7 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 	int ret = -ENODATA;
+ 
+ 	if (!osc_sb_cppc2_support_acked) {
+-		pr_debug("CPPC v2 _OSC not acked\n");
++		pr_info("CPPC v2 _OSC not acked\n");
+ 		if (!cpc_supported_by_cpu())
+ 			return -ENODEV;
+ 	}
+@@ -724,12 +724,12 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 	if (cpc_obj->type == ACPI_TYPE_INTEGER)	{
+ 		num_ent = cpc_obj->integer.value;
+ 		if (num_ent <= 1) {
+-			pr_debug("Unexpected _CPC NumEntries value (%d) for CPU:%d\n",
++			pr_info("Unexpected _CPC NumEntries value (%d) for CPU:%d\n",
+ 				 num_ent, pr->id);
+ 			goto out_free;
+ 		}
+ 	} else {
+-		pr_debug("Unexpected _CPC NumEntries entry type (%d) for CPU:%d\n",
++		pr_info("Unexpected _CPC NumEntries entry type (%d) for CPU:%d\n",
+ 			 cpc_obj->type, pr->id);
+ 		goto out_free;
+ 	}
+@@ -740,7 +740,7 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 	if (cpc_obj->type == ACPI_TYPE_INTEGER)	{
+ 		cpc_rev = cpc_obj->integer.value;
+ 	} else {
+-		pr_debug("Unexpected _CPC Revision entry type (%d) for CPU:%d\n",
++		pr_info("Unexpected _CPC Revision entry type (%d) for CPU:%d\n",
+ 			 cpc_obj->type, pr->id);
+ 		goto out_free;
+ 	}
+@@ -772,7 +772,7 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 					if (pcc_data_alloc(pcc_subspace_id))
+ 						goto out_free;
+ 				} else if (pcc_subspace_id != gas_t->access_width) {
+-					pr_debug("Mismatched PCC ids in _CPC for CPU:%d\n",
++					pr_info("Mismatched PCC ids in _CPC for CPU:%d\n",
+ 						 pr->id);
+ 					goto out_free;
+ 				}
+@@ -781,7 +781,7 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 					void __iomem *addr;
+ 
+ 					if (!osc_cpc_flexible_adr_space_confirmed) {
+-						pr_debug("Flexible address space capability not supported\n");
++						pr_info("Flexible address space capability not supported\n");
+ 						if (!cpc_supported_by_cpu())
+ 							goto out_free;
+ 					}
+@@ -798,25 +798,25 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 					 * SystemIO doesn't implement 64-bit
+ 					 * registers.
+ 					 */
+-					pr_debug("Invalid access width %d for SystemIO register in _CPC\n",
++					pr_info("Invalid access width %d for SystemIO register in _CPC\n",
+ 						 gas_t->access_width);
+ 					goto out_free;
+ 				}
+ 				if (gas_t->address & OVER_16BTS_MASK) {
+ 					/* SystemIO registers use 16-bit integer addresses */
+-					pr_debug("Invalid IO port %llu for SystemIO register in _CPC\n",
++					pr_info("Invalid IO port %llu for SystemIO register in _CPC\n",
+ 						 gas_t->address);
+ 					goto out_free;
+ 				}
+ 				if (!osc_cpc_flexible_adr_space_confirmed) {
+-					pr_debug("Flexible address space capability not supported\n");
++					pr_info("Flexible address space capability not supported\n");
+ 					if (!cpc_supported_by_cpu())
+ 						goto out_free;
+ 				}
+ 			} else {
+ 				if (gas_t->space_id != ACPI_ADR_SPACE_FIXED_HARDWARE || !cpc_ffh_supported()) {
+ 					/* Support only PCC, SystemMemory, SystemIO, and FFH type regs. */
+-					pr_debug("Unsupported register type (%d) in _CPC\n",
++					pr_info("Unsupported register type (%d) in _CPC\n",
+ 						 gas_t->space_id);
+ 					goto out_free;
+ 				}
+@@ -825,7 +825,7 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 			cpc_ptr->cpc_regs[i-2].type = ACPI_TYPE_BUFFER;
+ 			memcpy(&cpc_ptr->cpc_regs[i-2].cpc_entry.reg, gas_t, sizeof(*gas_t));
+ 		} else {
+-			pr_debug("Invalid entry type (%d) in _CPC for CPU:%d\n",
++			pr_info("Invalid entry type (%d) in _CPC for CPU:%d\n",
+ 				 i, pr->id);
+ 			goto out_free;
+ 		}
+@@ -862,7 +862,7 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 	}
+ 
+ 	/* Everything looks okay */
+-	pr_debug("Parsed CPC struct for CPU: %d\n", pr->id);
++	pr_info("Parsed CPC struct for CPU: %d\n", pr->id);
+ 
+ 	/* Add per logical CPU nodes for reading its feedback counters. */
+ 	cpu_dev = get_cpu_device(pr->id);
+@@ -1000,7 +1000,7 @@ static int cpc_read(int cpu, struct cpc_register_resource *reg_res, u64 *val)
+ 		status = acpi_os_read_port((acpi_io_address)reg->address,
+ 					   &val_u32, width);
+ 		if (ACPI_FAILURE(status)) {
+-			pr_debug("Error: Failed to read SystemIO port %llx\n",
++			pr_info("Error: Failed to read SystemIO port %llx\n",
+ 				 reg->address);
+ 			return -EFAULT;
+ 		}
+@@ -1031,7 +1031,7 @@ static int cpc_read(int cpu, struct cpc_register_resource *reg_res, u64 *val)
+ 		*val = readq_relaxed(vaddr);
+ 		break;
+ 	default:
+-		pr_debug("Error: Cannot read %u bit width from PCC for ss: %d\n",
++		pr_info("Error: Cannot read %u bit width from PCC for ss: %d\n",
+ 			 reg->bit_width, pcc_ss_id);
+ 		return -EFAULT;
+ 	}
+@@ -1053,7 +1053,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
+ 		status = acpi_os_write_port((acpi_io_address)reg->address,
+ 					    (u32)val, width);
+ 		if (ACPI_FAILURE(status)) {
+-			pr_debug("Error: Failed to write SystemIO port %llx\n",
++			pr_info("Error: Failed to write SystemIO port %llx\n",
+ 				 reg->address);
+ 			return -EFAULT;
+ 		}
+@@ -1083,7 +1083,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
+ 		writeq_relaxed(val, vaddr);
+ 		break;
+ 	default:
+-		pr_debug("Error: Cannot write %u bit width to PCC for ss: %d\n",
++		pr_info("Error: Cannot write %u bit width to PCC for ss: %d\n",
+ 			 reg->bit_width, pcc_ss_id);
+ 		ret_val = -EFAULT;
+ 		break;
+@@ -1098,7 +1098,7 @@ static int cppc_get_perf(int cpunum, enum cppc_regs reg_idx, u64 *perf)
+ 	struct cpc_register_resource *reg;
+ 
+ 	if (!cpc_desc) {
+-		pr_debug("No CPC descriptor for CPU:%d\n", cpunum);
++		pr_info("No CPC descriptor for CPU:%d\n", cpunum);
+ 		return -ENODEV;
+ 	}
+ 
+@@ -1175,7 +1175,7 @@ int cppc_get_perf_caps(int cpunum, struct cppc_perf_caps *perf_caps)
+ 	int ret = 0, regs_in_pcc = 0;
+ 
+ 	if (!cpc_desc) {
+-		pr_debug("No CPC descriptor for CPU:%d\n", cpunum);
++		pr_info("No CPC descriptor for CPU:%d\n", cpunum);
+ 		return -ENODEV;
+ 	}
+ 
+@@ -1192,7 +1192,7 @@ int cppc_get_perf_caps(int cpunum, struct cppc_perf_caps *perf_caps)
+ 		CPC_IN_PCC(lowest_non_linear_reg) || CPC_IN_PCC(nominal_reg) ||
+ 		CPC_IN_PCC(low_freq_reg) || CPC_IN_PCC(nom_freq_reg)) {
+ 		if (pcc_ss_id < 0) {
+-			pr_debug("Invalid pcc_ss_id\n");
++			pr_info("Invalid pcc_ss_id\n");
+ 			return -ENODEV;
+ 		}
+ 		pcc_ss_data = pcc_data[pcc_ss_id];
+@@ -1264,7 +1264,7 @@ int cppc_get_perf_ctrs(int cpunum, struct cppc_perf_fb_ctrs *perf_fb_ctrs)
+ 	int ret = 0, regs_in_pcc = 0;
+ 
+ 	if (!cpc_desc) {
+-		pr_debug("No CPC descriptor for CPU:%d\n", cpunum);
++		pr_info("No CPC descriptor for CPU:%d\n", cpunum);
+ 		return -ENODEV;
+ 	}
+ 
+@@ -1284,7 +1284,7 @@ int cppc_get_perf_ctrs(int cpunum, struct cppc_perf_fb_ctrs *perf_fb_ctrs)
+ 	if (CPC_IN_PCC(delivered_reg) || CPC_IN_PCC(reference_reg) ||
+ 		CPC_IN_PCC(ctr_wrap_reg) || CPC_IN_PCC(ref_perf_reg)) {
+ 		if (pcc_ss_id < 0) {
+-			pr_debug("Invalid pcc_ss_id\n");
++			pr_info("Invalid pcc_ss_id\n");
+ 			return -ENODEV;
+ 		}
+ 		pcc_ss_data = pcc_data[pcc_ss_id];
+@@ -1343,7 +1343,7 @@ int cppc_set_enable(int cpu, bool enable)
+ 	int ret = -EINVAL;
+ 
+ 	if (!cpc_desc) {
+-		pr_debug("No CPC descriptor for CPU:%d\n", cpu);
++		pr_info("No CPC descriptor for CPU:%d\n", cpu);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -1387,7 +1387,7 @@ int cppc_set_perf(int cpu, struct cppc_perf_ctrls *perf_ctrls)
+ 	int ret = 0;
+ 
+ 	if (!cpc_desc) {
+-		pr_debug("No CPC descriptor for CPU:%d\n", cpu);
++		pr_info("No CPC descriptor for CPU:%d\n", cpu);
+ 		return -ENODEV;
+ 	}
+ 
+@@ -1402,7 +1402,7 @@ int cppc_set_perf(int cpu, struct cppc_perf_ctrls *perf_ctrls)
+ 	 */
+ 	if (CPC_IN_PCC(desired_reg)) {
+ 		if (pcc_ss_id < 0) {
+-			pr_debug("Invalid pcc_ss_id\n");
++			pr_info("Invalid pcc_ss_id\n");
+ 			return -ENODEV;
+ 		}
+ 		pcc_ss_data = pcc_data[pcc_ss_id];
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index 57cdb3679..376e0cd3b 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -451,9 +451,9 @@ static void intel_pstate_init_acpi_perf_limits(struct cpufreq_policy *policy)
+ 	if (cpu->acpi_perf_data.state_count < 2)
+ 		goto err;
+ 
+-	pr_debug("CPU%u - ACPI _PSS perf data\n", policy->cpu);
++	pr_info("CPU%u - ACPI _PSS perf data\n", policy->cpu);
+ 	for (i = 0; i < cpu->acpi_perf_data.state_count; i++) {
+-		pr_debug("     %cP%d: %u MHz, %u mW, 0x%x\n",
++		pr_info("     %cP%d: %u MHz, %u mW, 0x%x\n",
+ 			 (i == cpu->acpi_perf_data.state ? '*' : ' '), i,
+ 			 (u32) cpu->acpi_perf_data.states[i].core_frequency,
+ 			 (u32) cpu->acpi_perf_data.states[i].power,
+@@ -475,7 +475,7 @@ static void intel_pstate_init_acpi_perf_limits(struct cpufreq_policy *policy)
+ 		cpu->acpi_perf_data.states[0].core_frequency =
+ 					policy->cpuinfo.max_freq / 1000;
+ 	cpu->valid_pss_table = true;
+-	pr_debug("_PPC limits will be enforced\n");
++	pr_info("_PPC limits will be enforced\n");
+ 
+ 	return;
+ 
+@@ -535,13 +535,13 @@ static void intel_pstate_hybrid_hwp_adjust(struct cpudata *cpu)
+ 	int turbo_freq = perf_ctl_turbo * perf_ctl_scaling;
+ 	int scaling = cpu->pstate.scaling;
+ 
+-	pr_debug("CPU%d: perf_ctl_max_phys = %d\n", cpu->cpu, perf_ctl_max_phys);
+-	pr_debug("CPU%d: perf_ctl_max = %d\n", cpu->cpu, pstate_funcs.get_max());
+-	pr_debug("CPU%d: perf_ctl_turbo = %d\n", cpu->cpu, perf_ctl_turbo);
+-	pr_debug("CPU%d: perf_ctl_scaling = %d\n", cpu->cpu, perf_ctl_scaling);
+-	pr_debug("CPU%d: HWP_CAP guaranteed = %d\n", cpu->cpu, cpu->pstate.max_pstate);
+-	pr_debug("CPU%d: HWP_CAP highest = %d\n", cpu->cpu, cpu->pstate.turbo_pstate);
+-	pr_debug("CPU%d: HWP-to-frequency scaling factor: %d\n", cpu->cpu, scaling);
++	pr_info("CPU%d: perf_ctl_max_phys = %d\n", cpu->cpu, perf_ctl_max_phys);
++	pr_info("CPU%d: perf_ctl_max = %d\n", cpu->cpu, pstate_funcs.get_max());
++	pr_info("CPU%d: perf_ctl_turbo = %d\n", cpu->cpu, perf_ctl_turbo);
++	pr_info("CPU%d: perf_ctl_scaling = %d\n", cpu->cpu, perf_ctl_scaling);
++	pr_info("CPU%d: HWP_CAP guaranteed = %d\n", cpu->cpu, cpu->pstate.max_pstate);
++	pr_info("CPU%d: HWP_CAP highest = %d\n", cpu->cpu, cpu->pstate.turbo_pstate);
++	pr_info("CPU%d: HWP-to-frequency scaling factor: %d\n", cpu->cpu, scaling);
+ 
+ 	/*
+ 	 * If the product of the HWP performance scaling factor and the HWP_CAP
+@@ -556,7 +556,7 @@ static void intel_pstate_hybrid_hwp_adjust(struct cpudata *cpu)
+ 		scaling = DIV_ROUND_UP(turbo_freq, cpu->pstate.turbo_pstate);
+ 		cpu->pstate.scaling = scaling;
+ 
+-		pr_debug("CPU%d: refined HWP-to-frequency scaling factor: %d\n",
++		pr_info("CPU%d: refined HWP-to-frequency scaling factor: %d\n",
+ 			 cpu->cpu, scaling);
+ 	}
+ 
+@@ -1090,7 +1090,7 @@ static int intel_pstate_suspend(struct cpufreq_policy *policy)
+ {
+ 	struct cpudata *cpu = all_cpu_data[policy->cpu];
+ 
+-	pr_debug("CPU %d suspending\n", cpu->cpu);
++	pr_info("CPU %d suspending\n", cpu->cpu);
+ 
+ 	cpu->suspended = true;
+ 
+@@ -1104,7 +1104,7 @@ static int intel_pstate_resume(struct cpufreq_policy *policy)
+ {
+ 	struct cpudata *cpu = all_cpu_data[policy->cpu];
+ 
+-	pr_debug("CPU %d resuming\n", cpu->cpu);
++	pr_info("CPU %d resuming\n", cpu->cpu);
+ 
+ 	/* Only restore if the system default is changed */
+ 	if (power_ctl_ee_state == POWER_CTL_EE_ENABLE)
+@@ -1875,7 +1875,7 @@ static int core_get_tdp_ratio(u64 plat_info)
+ 			tdp_ratio >>= 16;
+ 
+ 		tdp_ratio &= 0xff; /* ratios are only 8 bits long */
+-		pr_debug("tdp_ratio %x\n", (int)tdp_ratio);
++		pr_info("tdp_ratio %x\n", (int)tdp_ratio);
+ 
+ 		return (int)tdp_ratio;
+ 	}
+@@ -1911,7 +1911,7 @@ static int core_get_max_pstate(void)
+ 		tar_levels = tar & 0xff;
+ 		if (tdp_ratio - 1 == tar_levels) {
+ 			max_pstate = tar_levels;
+-			pr_debug("max_pstate=TAC %x\n", max_pstate);
++			pr_info("max_pstate=TAC %x\n", max_pstate);
+ 		}
+ 	}
+ 
+@@ -2480,7 +2480,7 @@ static int intel_pstate_init_cpu(unsigned int cpunum)
+ 
+ 	intel_pstate_get_cpu_pstates(cpu);
+ 
+-	pr_debug("controlling: cpu %d\n", cpunum);
++	pr_info("controlling: cpu %d\n", cpunum);
+ 
+ 	return 0;
+ }
+@@ -2552,7 +2552,7 @@ static void intel_pstate_update_perf_limits(struct cpudata *cpu,
+ 		min_policy_perf = DIV_ROUND_UP(freq, scaling);
+ 	}
+ 
+-	pr_debug("cpu:%d min_policy_perf:%d max_policy_perf:%d\n",
++	pr_info("cpu:%d min_policy_perf:%d max_policy_perf:%d\n",
+ 		 cpu->cpu, min_policy_perf, max_policy_perf);
+ 
+ 	/* Normalize user input to [min_perf, max_perf] */
+@@ -2568,7 +2568,7 @@ static void intel_pstate_update_perf_limits(struct cpudata *cpu,
+ 		global_min = DIV_ROUND_UP(turbo_max * global.min_perf_pct, 100);
+ 		global_min = clamp_t(int32_t, global_min, 0, global_max);
+ 
+-		pr_debug("cpu:%d global_min:%d global_max:%d\n", cpu->cpu,
++		pr_info("cpu:%d global_min:%d global_max:%d\n", cpu->cpu,
+ 			 global_min, global_max);
+ 
+ 		cpu->min_perf_ratio = max(min_policy_perf, global_min);
+@@ -2581,7 +2581,7 @@ static void intel_pstate_update_perf_limits(struct cpudata *cpu,
+ 					  cpu->max_perf_ratio);
+ 
+ 	}
+-	pr_debug("cpu:%d max_perf_ratio:%d min_perf_ratio:%d\n", cpu->cpu,
++	pr_info("cpu:%d max_perf_ratio:%d min_perf_ratio:%d\n", cpu->cpu,
+ 		 cpu->max_perf_ratio,
+ 		 cpu->min_perf_ratio);
+ }
+@@ -2593,7 +2593,7 @@ static int intel_pstate_set_policy(struct cpufreq_policy *policy)
+ 	if (!policy->cpuinfo.max_freq)
+ 		return -ENODEV;
+ 
+-	pr_debug("set_policy cpuinfo.max %u policy->max %u\n",
++	pr_info("set_policy cpuinfo.max %u policy->max %u\n",
+ 		 policy->cpuinfo.max_freq, policy->max);
+ 
+ 	cpu = all_cpu_data[policy->cpu];
+@@ -2637,7 +2637,7 @@ static void intel_pstate_adjust_policy_max(struct cpudata *cpu,
+ 	    cpu->pstate.max_pstate_physical > cpu->pstate.max_pstate &&
+ 	    policy->max < policy->cpuinfo.max_freq &&
+ 	    policy->max > cpu->pstate.max_freq) {
+-		pr_debug("policy->max > max non turbo frequency\n");
++		pr_info("policy->max > max non turbo frequency\n");
+ 		policy->max = policy->cpuinfo.max_freq;
+ 	}
+ }
+@@ -2671,7 +2671,7 @@ static int intel_cpufreq_cpu_offline(struct cpufreq_policy *policy)
+ {
+ 	struct cpudata *cpu = all_cpu_data[policy->cpu];
+ 
+-	pr_debug("CPU %d going offline\n", cpu->cpu);
++	pr_info("CPU %d going offline\n", cpu->cpu);
+ 
+ 	if (cpu->suspended)
+ 		return 0;
+@@ -2696,7 +2696,7 @@ static int intel_pstate_cpu_online(struct cpufreq_policy *policy)
+ {
+ 	struct cpudata *cpu = all_cpu_data[policy->cpu];
+ 
+-	pr_debug("CPU %d going online\n", cpu->cpu);
++	pr_info("CPU %d going online\n", cpu->cpu);
+ 
+ 	intel_pstate_init_acpi_perf_limits(policy);
+ 
+@@ -2721,7 +2721,7 @@ static int intel_pstate_cpu_offline(struct cpufreq_policy *policy)
+ 
+ static int intel_pstate_cpu_exit(struct cpufreq_policy *policy)
+ {
+-	pr_debug("CPU %d exiting\n", policy->cpu);
++	pr_info("CPU %d exiting\n", policy->cpu);
+ 
+ 	policy->fast_switch_possible = false;
+ 
+@@ -3268,7 +3268,7 @@ static bool __init intel_pstate_no_acpi_pss(void)
+ 		kfree(pss);
+ 	}
+ 
+-	pr_debug("ACPI _PSS not found\n");
++	pr_info("ACPI _PSS not found\n");
+ 	return true;
+ }
+ 
+@@ -3285,7 +3285,7 @@ static bool __init intel_pstate_no_acpi_pcch(void)
+ 		return false;
+ 
+ not_found:
+-	pr_debug("ACPI PCCH not found\n");
++	pr_info("ACPI PCCH not found\n");
+ 	return true;
+ }
+ 
+@@ -3301,7 +3301,7 @@ static bool __init intel_pstate_has_acpi_ppc(void)
+ 		if (acpi_has_method(pr->handle, "_PPC"))
+ 			return true;
+ 	}
+-	pr_debug("ACPI _PPC not found\n");
++	pr_info("ACPI _PPC not found\n");
+ 	return false;
+ }
+ 
+@@ -3342,8 +3342,8 @@ static bool __init intel_pstate_platform_pwr_mgmt_exists(void)
+ 	if (id) {
+ 		rdmsrl(MSR_MISC_PWR_MGMT, misc_pwr);
+ 		if (misc_pwr & BITMASK_OOB) {
+-			pr_debug("Bit 8 or 18 in the MISC_PWR_MGMT MSR set\n");
+-			pr_debug("P states are controlled in Out of Band mode by the firmware/hardware\n");
++			pr_info("Bit 8 or 18 in the MISC_PWR_MGMT MSR set\n");
++			pr_info("P states are controlled in Out of Band mode by the firmware/hardware\n");
+ 			return true;
+ 		}
+ 	}
+-- 
+2.37.1
+
