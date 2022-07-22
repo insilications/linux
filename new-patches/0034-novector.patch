@@ -16,7 +16,7 @@ index 9e6094b9e..a0328a9e1 100644
  #    https://gcc.gnu.org/bugzilla/show_bug.cgi?id=53383
  #
 -KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx
-+KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -mno-avx2 -O0 -O2 -fno-tree-vectorize -mpopcnt
++KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -mno-avx2 -O3 -fno-tree-vectorize -fno-tree-loop-vectorize -fno-tree-slp-vectorize -mpopcnt
  
  ifeq ($(CONFIG_X86_KERNEL_IBT),y)
  #
