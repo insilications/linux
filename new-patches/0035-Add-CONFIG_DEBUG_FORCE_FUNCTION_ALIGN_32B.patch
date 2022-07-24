@@ -1,4 +1,4 @@
-From 79923c9cad13f2631eafbe2a5420bc73925348af Mon Sep 17 00:00:00 2001
+From 2ffeffb7abadabb7fc7661359c89b4b67411811a Mon Sep 17 00:00:00 2001
 From: Francisco Boni Neto <boboniboni@gmail.com>
 Date: Sun, 17 Jul 2022 06:56:16 -0300
 Subject: [PATCH 35/38] Add CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_32B

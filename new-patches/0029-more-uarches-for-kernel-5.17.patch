@@ -1,4 +1,4 @@
-From c1d56f5aa0c6470f9e915bc7b0153bea2532fc81 Mon Sep 17 00:00:00 2001
+From 1910e943eb4971c8785d1bc7d6f17cadccade78e Mon Sep 17 00:00:00 2001
 From: graysky <graysky@archlinux.us>
 Date: Tue, 15 Mar 2022 05:58:43 -0400
 Subject: [PATCH 29/38] more uarches for kernel 5.17+

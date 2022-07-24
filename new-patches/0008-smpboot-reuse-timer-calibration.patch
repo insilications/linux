@@ -1,4 +1,4 @@
-From 0516412ad38eb5d039a0e77170df47253738bedf Mon Sep 17 00:00:00 2001
+From ab2bd61c06a64d616fae7cfe045aaaa37f203bf5 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 11 Feb 2015 17:28:14 -0600
 Subject: [PATCH 08/38] smpboot: reuse timer calibration

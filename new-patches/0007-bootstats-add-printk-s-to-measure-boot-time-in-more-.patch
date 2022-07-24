@@ -1,4 +1,4 @@
-From bb8576fb98ae4b73560412a92c59a5118a437d9f Mon Sep 17 00:00:00 2001
+From 0f5235602f6333ca20b54b1b6a9da70ecf20a5f0 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 11 Feb 2015 16:05:23 -0600
 Subject: [PATCH 07/38] bootstats: add printk's to measure boot time in more

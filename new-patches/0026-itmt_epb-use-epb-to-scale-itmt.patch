@@ -1,4 +1,4 @@
-From 0b6e7bb00f5967dc408826d95718e1748fe39cf7 Mon Sep 17 00:00:00 2001
+From 9a40399dd4df57a21da87200d519f505b5439aff Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan.van.de.ven@intel.com>
 Date: Tue, 16 Nov 2021 17:39:25 +0000
 Subject: [PATCH 26/38] itmt_epb: use epb to scale itmt

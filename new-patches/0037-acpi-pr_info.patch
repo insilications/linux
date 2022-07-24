@@ -1,4 +1,4 @@
-From fe5e039a9e93be62740b342750f38291a045dd85 Mon Sep 17 00:00:00 2001
+From 2b9d111d8af6272b5cdeb8f8c92985d74b120fdd Mon Sep 17 00:00:00 2001
 From: Francisco Boni Neto <boboniboni@gmail.com>
 Date: Fri, 22 Jul 2022 17:19:03 -0300
 Subject: [PATCH 37/38] acpi pr_info

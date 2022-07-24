@@ -1,29 +1,67 @@
-From 37bd9df15c3dd7467711a0545f07a90816008ee7 Mon Sep 17 00:00:00 2001
+From 76415d1f62738ec892eb94e3af74ab817fe7678c Mon Sep 17 00:00:00 2001
 From: Francisco Boni Neto <boboniboni@gmail.com>
 Date: Sun, 24 Jul 2022 12:53:35 -0300
 Subject: [PATCH 38/38] fix itmt
 
 ---
- drivers/cpufreq/intel_pstate.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ drivers/cpufreq/intel_pstate.c | 48 ++++++++++++++++++++++++----------
+ 1 file changed, 34 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
-index adab5010d..fe8340742 100644
+index adab5010d..4e1e2d5ad 100644
 --- a/drivers/cpufreq/intel_pstate.c
 +++ b/drivers/cpufreq/intel_pstate.c
-@@ -923,6 +923,11 @@ static void __intel_pstate_get_hwp_cap(struct cpudata *cpu)
+@@ -344,11 +344,11 @@ static void intel_pstate_set_itmt_prio(int cpu)
+ {
+ 	struct cppc_perf_caps cppc_perf;
+ 	static u32 max_highest_perf = 0, min_highest_perf = U32_MAX;
+-	int ret;
++// 	int ret;
+ 
+-	ret = cppc_get_perf_caps(cpu, &cppc_perf);
+-	if (ret)
+-		return;
++// 	ret = cppc_get_perf_caps(cpu, &cppc_perf);
++// 	if (ret)
++// 		return;
+ 
+ 	/*
+ 	 * On some systems with overclocking enabled, CPPC.highest_perf is hardcoded to 0xff.
+@@ -899,6 +899,16 @@ static ssize_t show_base_frequency(struct cpufreq_policy *policy, char *buf)
+ 		u64 cap;
+ 
+ 		rdmsrl_on_cpu(policy->cpu, MSR_HWP_CAPABILITIES, &cap);
++		pr_info("21 CPU %d HWP_CAP: low %d eff %d guar %d high %d\n", policy->cpu, HWP_LOWEST_PERF(cap), HWP_MOSTEFFICIENT_PERF(cap), HWP_GUARANTEED_PERF(cap), HWP_HIGHEST_PERF(cap));
++		if (policy->cpu != 6 && policy->cpu != 7 && policy->cpu != 16 && policy->cpu != 17) {
++			cap = ((cap >> 0) & 0xFFFFFFFFFFFFFF00) | 0x33;
++			pr_info("2 CPU %d - 0x33\n", policy->cpu);
++			pr_info("22 CPU %d HWP_CAP: low %d eff %d guar %d high %d\n", policy->cpu, HWP_LOWEST_PERF(cap), HWP_MOSTEFFICIENT_PERF(cap), HWP_GUARANTEED_PERF(cap), HWP_HIGHEST_PERF(cap));
++		} else {
++			cap = ((cap >> 0) & 0xFFFFFFFFFFFFFF00) | 0x35;
++			pr_info("2 CPU %d - 0x35\n", policy->cpu);
++			pr_info("22 HWP_CAP CPU %d: low %d eff %d guar %d high %d\n", policy->cpu, HWP_LOWEST_PERF(cap), HWP_MOSTEFFICIENT_PERF(cap), HWP_GUARANTEED_PERF(cap), HWP_HIGHEST_PERF(cap));
++		}
+ 		ratio = HWP_GUARANTEED_PERF(cap);
+ 	}
+ 
+@@ -923,6 +933,16 @@ static void __intel_pstate_get_hwp_cap(struct cpudata *cpu)
  	u64 cap;
  
  	rdmsrl_on_cpu(cpu->cpu, MSR_HWP_CAPABILITIES, &cap);
-+	if (cpu->cpu != 6 || cpu->cpu != 7) {
++	pr_info("11 CPU %d HWP_CAP: low %d eff %d guar %d high %d\n", cpu->cpu, HWP_LOWEST_PERF(cap), HWP_MOSTEFFICIENT_PERF(cap), HWP_GUARANTEED_PERF(cap), HWP_HIGHEST_PERF(cap));
++	if (cpu->cpu != 6 && cpu->cpu != 7 && cpu->cpu != 16 && cpu->cpu != 17) {
 +		cap = ((cap >> 0) & 0xFFFFFFFFFFFFFF00) | 0x33;
++		pr_info("1 CPU %d - 0x33\n", cpu->cpu);
++		pr_info("12 CPU %d HWP_CAP: low %d eff %d guar %d high %d\n", cpu->cpu, HWP_LOWEST_PERF(cap), HWP_MOSTEFFICIENT_PERF(cap), HWP_GUARANTEED_PERF(cap), HWP_HIGHEST_PERF(cap));
 +	} else {
 +		cap = ((cap >> 0) & 0xFFFFFFFFFFFFFF00) | 0x35;
++		pr_info("1 CPU %d - 0x35\n", cpu->cpu);
++		pr_info("12 HWP_CAP CPU %d: low %d eff %d guar %d high %d\n", cpu->cpu, HWP_LOWEST_PERF(cap), HWP_MOSTEFFICIENT_PERF(cap), HWP_GUARANTEED_PERF(cap), HWP_HIGHEST_PERF(cap));
 +	}
  	WRITE_ONCE(cpu->hwp_cap_cached, cap);
  	cpu->pstate.max_pstate = HWP_GUARANTEED_PERF(cap);
  	cpu->pstate.turbo_pstate = HWP_HIGHEST_PERF(cap);
-@@ -2480,7 +2485,7 @@ static int intel_pstate_init_cpu(unsigned int cpunum)
+@@ -2480,7 +2500,7 @@ static int intel_pstate_init_cpu(unsigned int cpunum)
  
  	intel_pstate_get_cpu_pstates(cpu);
  
@@ -32,7 +70,7 @@ index adab5010d..fe8340742 100644
  
  	return 0;
  }
-@@ -2552,8 +2557,8 @@ static void intel_pstate_update_perf_limits(struct cpudata *cpu,
+@@ -2552,8 +2572,8 @@ static void intel_pstate_update_perf_limits(struct cpudata *cpu,
  		min_policy_perf = DIV_ROUND_UP(freq, scaling);
  	}
  
@@ -43,7 +81,7 @@ index adab5010d..fe8340742 100644
  
  	/* Normalize user input to [min_perf, max_perf] */
  	if (per_cpu_limits) {
-@@ -2568,8 +2573,8 @@ static void intel_pstate_update_perf_limits(struct cpudata *cpu,
+@@ -2568,8 +2588,8 @@ static void intel_pstate_update_perf_limits(struct cpudata *cpu,
  		global_min = DIV_ROUND_UP(turbo_max * global.min_perf_pct, 100);
  		global_min = clamp_t(int32_t, global_min, 0, global_max);
  
@@ -54,7 +92,7 @@ index adab5010d..fe8340742 100644
  
  		cpu->min_perf_ratio = max(min_policy_perf, global_min);
  		cpu->min_perf_ratio = min(cpu->min_perf_ratio, max_policy_perf);
-@@ -2581,9 +2586,9 @@ static void intel_pstate_update_perf_limits(struct cpudata *cpu,
+@@ -2581,9 +2601,9 @@ static void intel_pstate_update_perf_limits(struct cpudata *cpu,
  					  cpu->max_perf_ratio);
  
  	}
@@ -67,7 +105,7 @@ index adab5010d..fe8340742 100644
  }
  
  static int intel_pstate_set_policy(struct cpufreq_policy *policy)
-@@ -2593,8 +2598,8 @@ static int intel_pstate_set_policy(struct cpufreq_policy *policy)
+@@ -2593,8 +2613,8 @@ static int intel_pstate_set_policy(struct cpufreq_policy *policy)
  	if (!policy->cpuinfo.max_freq)
  		return -ENODEV;
  
