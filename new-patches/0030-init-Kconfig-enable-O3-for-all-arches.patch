@@ -1,7 +1,7 @@
 From 4043fc825d0d50a851d0ba2641a24338b57b83df Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@redhat.com>
 Date: Wed, 11 Dec 2019 11:46:19 +0100
-Subject: [PATCH 30/37] init/Kconfig: enable -O3 for all arches
+Subject: [PATCH 30/38] init/Kconfig: enable -O3 for all arches
 
 Building a kernel with -O3 may help in hunting bugs like [1] and thus
 using this switch should not be restricted to one specific arch only.

@@ -1,0 +1,83 @@
+From 37bd9df15c3dd7467711a0545f07a90816008ee7 Mon Sep 17 00:00:00 2001
+From: Francisco Boni Neto <boboniboni@gmail.com>
+Date: Sun, 24 Jul 2022 12:53:35 -0300
+Subject: [PATCH 38/38] fix itmt
+
+---
+ drivers/cpufreq/intel_pstate.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index adab5010d..fe8340742 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -923,6 +923,11 @@ static void __intel_pstate_get_hwp_cap(struct cpudata *cpu)
+ 	u64 cap;
+ 
+ 	rdmsrl_on_cpu(cpu->cpu, MSR_HWP_CAPABILITIES, &cap);
++	if (cpu->cpu != 6 || cpu->cpu != 7) {
++		cap = ((cap >> 0) & 0xFFFFFFFFFFFFFF00) | 0x33;
++	} else {
++		cap = ((cap >> 0) & 0xFFFFFFFFFFFFFF00) | 0x35;
++	}
+ 	WRITE_ONCE(cpu->hwp_cap_cached, cap);
+ 	cpu->pstate.max_pstate = HWP_GUARANTEED_PERF(cap);
+ 	cpu->pstate.turbo_pstate = HWP_HIGHEST_PERF(cap);
+@@ -2480,7 +2485,7 @@ static int intel_pstate_init_cpu(unsigned int cpunum)
+ 
+ 	intel_pstate_get_cpu_pstates(cpu);
+ 
+-// 	pr_info("controlling: cpu %d\n", cpunum);
++	pr_info("controlling: cpu %d\n", cpunum);
+ 
+ 	return 0;
+ }
+@@ -2552,8 +2557,8 @@ static void intel_pstate_update_perf_limits(struct cpudata *cpu,
+ 		min_policy_perf = DIV_ROUND_UP(freq, scaling);
+ 	}
+ 
+-// 	pr_info("cpu:%d min_policy_perf:%d max_policy_perf:%d\n",
+-// 		 cpu->cpu, min_policy_perf, max_policy_perf);
++	pr_info("cpu:%d min_policy_perf:%d max_policy_perf:%d\n",
++		 cpu->cpu, min_policy_perf, max_policy_perf);
+ 
+ 	/* Normalize user input to [min_perf, max_perf] */
+ 	if (per_cpu_limits) {
+@@ -2568,8 +2573,8 @@ static void intel_pstate_update_perf_limits(struct cpudata *cpu,
+ 		global_min = DIV_ROUND_UP(turbo_max * global.min_perf_pct, 100);
+ 		global_min = clamp_t(int32_t, global_min, 0, global_max);
+ 
+-// 		pr_info("cpu:%d global_min:%d global_max:%d\n", cpu->cpu,
+-// 			 global_min, global_max);
++		pr_info("cpu:%d global_min:%d global_max:%d\n", cpu->cpu,
++			 global_min, global_max);
+ 
+ 		cpu->min_perf_ratio = max(min_policy_perf, global_min);
+ 		cpu->min_perf_ratio = min(cpu->min_perf_ratio, max_policy_perf);
+@@ -2581,9 +2586,9 @@ static void intel_pstate_update_perf_limits(struct cpudata *cpu,
+ 					  cpu->max_perf_ratio);
+ 
+ 	}
+-// 	pr_info("cpu:%d max_perf_ratio:%d min_perf_ratio:%d\n", cpu->cpu,
+-// 		 cpu->max_perf_ratio,
+-// 		 cpu->min_perf_ratio);
++	pr_info("cpu:%d max_perf_ratio:%d min_perf_ratio:%d\n", cpu->cpu,
++		 cpu->max_perf_ratio,
++		 cpu->min_perf_ratio);
+ }
+ 
+ static int intel_pstate_set_policy(struct cpufreq_policy *policy)
+@@ -2593,8 +2598,8 @@ static int intel_pstate_set_policy(struct cpufreq_policy *policy)
+ 	if (!policy->cpuinfo.max_freq)
+ 		return -ENODEV;
+ 
+-// 	pr_info("set_policy cpuinfo.max %u policy->max %u\n",
+-// 		 policy->cpuinfo.max_freq, policy->max);
++	pr_info("set_policy cpuinfo.max %u policy->max %u\n",
++		 policy->cpuinfo.max_freq, policy->max);
+ 
+ 	cpu = all_cpu_data[policy->cpu];
+ 	cpu->policy = policy->policy;
+-- 
+2.37.1
+

@@ -1,7 +1,7 @@
 From 3c742403a864739c4802f2b923c792befb35b35c Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Tue, 23 Jun 2015 01:26:52 -0500
-Subject: [PATCH 01/37] i8042: decrease debug message level to info
+Subject: [PATCH 01/38] i8042: decrease debug message level to info
 
 Author:    Arjan van de Ven <arjan@linux.intel.com>
 

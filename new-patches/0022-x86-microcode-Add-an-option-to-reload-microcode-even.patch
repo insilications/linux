@@ -1,7 +1,7 @@
 From 97e0b61ad57de222bbba8cc1b4e9dfd46f647f84 Mon Sep 17 00:00:00 2001
 From: Ashok Raj <ashok.raj@intel.com>
 Date: Thu, 19 Aug 2021 14:49:47 -0700
-Subject: [PATCH 22/37] x86/microcode: Add an option to reload microcode even
+Subject: [PATCH 22/38] x86/microcode: Add an option to reload microcode even
  if revision is the same
 
 This is POC to support rollback. This is a simple version, admin uses

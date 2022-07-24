@@ -1,7 +1,7 @@
 From 701f25d3a3fdfd16dde30c42d8640716d350a218 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan.van.de.ven@intel.com>
 Date: Tue, 23 Nov 2021 17:38:50 +0000
-Subject: [PATCH 27/37] add a per cpu minimum high watermark an tune batch size
+Subject: [PATCH 27/38] add a per cpu minimum high watermark an tune batch size
 
 make sure there's at least 1024 per cpu pages... a reasonably small
 amount for todays system
