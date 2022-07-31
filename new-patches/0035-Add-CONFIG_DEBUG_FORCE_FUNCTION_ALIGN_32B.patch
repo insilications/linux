@@ -1,4 +1,4 @@
-From 2ffeffb7abadabb7fc7661359c89b4b67411811a Mon Sep 17 00:00:00 2001
+From d8e59ecac6d65a8bf8dbcfa9aadcfb0b8ba8c40d Mon Sep 17 00:00:00 2001
 From: Francisco Boni Neto <boboniboni@gmail.com>
 Date: Sun, 17 Jul 2022 06:56:16 -0300
 Subject: [PATCH 35/38] Add CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_32B
@@ -9,7 +9,7 @@ Subject: [PATCH 35/38] Add CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_32B
  2 files changed, 16 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 00fd80c5d..c454bd206 100644
+index b79c1c181..6ea32f5dc 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -940,6 +940,10 @@ ifdef CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B

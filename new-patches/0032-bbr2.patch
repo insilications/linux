@@ -1,6 +1,6 @@
-From 71d718af9a54a71d242bd50a8d67800a6ccccd35 Mon Sep 17 00:00:00 2001
+From 42ff71bd0a4ccb34b309e9797529115e763525c8 Mon Sep 17 00:00:00 2001
 From: Francisco Boni Neto <boboniboni@gmail.com>
-Date: Sun, 10 Jul 2022 09:31:53 -0300
+Date: Sun, 31 Jul 2022 10:53:09 -0300
 Subject: [PATCH 32/38] bbr2
 
 ---
@@ -37,7 +37,7 @@ index 1168302b7..138c1e6f1 100644
  	u32	chrono_stat[3];	/* Time in jiffies for chrono_stat stats */
  	u8	chrono_type:2,	/* current chronograph type */
 diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
-index 85cd695e7..46139cbf8 100644
+index ee88f0f13..1412edffa 100644
 --- a/include/net/inet_connection_sock.h
 +++ b/include/net/inet_connection_sock.h
 @@ -132,7 +132,8 @@ struct inet_connection_sock {
@@ -51,7 +51,7 @@ index 85cd695e7..46139cbf8 100644
  };
  
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 071735e10..ae7303bba 100644
+index 78a64e1b3..21775ebe9 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
 @@ -370,6 +370,7 @@ static inline void tcp_dec_quickack_mode(struct sock *sk,
@@ -281,7 +281,7 @@ index f79ab942f..389f4c874 100644
  	offsetof(struct tcp_congestion_ops, cong_control),
  };
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 1810ffd4a..70474e9c1 100644
+index 376cf8085..bc9425932 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
 @@ -3067,6 +3067,7 @@ int tcp_disconnect(struct sock *sk, int flags)
@@ -3050,7 +3050,7 @@ index d3cae4074..0f268f2ff 100644
  		icsk->icsk_ca_ops->init(sk);
  	if (tcp_ca_needs_ecn(sk))
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 07dbcbae7..e3fdd1ace 100644
+index b1637990d..21c2922d9 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
 @@ -349,7 +349,7 @@ static void __tcp_ecn_check_ce(struct sock *sk, const struct sk_buff *skb)
@@ -3071,7 +3071,7 @@ index 07dbcbae7..e3fdd1ace 100644
  			tcp_ca_event(sk, CA_EVENT_ECN_NO_CE);
  		tp->ecn_flags |= TCP_ECN_SEEN;
  		break;
-@@ -1079,7 +1079,12 @@ static void tcp_verify_retransmit_hint(struct tcp_sock *tp, struct sk_buff *skb)
+@@ -1080,7 +1080,12 @@ static void tcp_verify_retransmit_hint(struct tcp_sock *tp, struct sk_buff *skb)
   */
  static void tcp_notify_skb_loss_event(struct tcp_sock *tp, const struct sk_buff *skb)
  {
@@ -3084,7 +3084,7 @@ index 07dbcbae7..e3fdd1ace 100644
  }
  
  void tcp_mark_skb_lost(struct sock *sk, struct sk_buff *skb)
-@@ -1460,6 +1465,17 @@ static bool tcp_shifted_skb(struct sock *sk, struct sk_buff *prev,
+@@ -1461,6 +1466,17 @@ static bool tcp_shifted_skb(struct sock *sk, struct sk_buff *prev,
  	WARN_ON_ONCE(tcp_skb_pcount(skb) < pcount);
  	tcp_skb_pcount_add(skb, -pcount);
  
@@ -3102,7 +3102,7 @@ index 07dbcbae7..e3fdd1ace 100644
  	/* When we're adding to gso_segs == 1, gso_size will be zero,
  	 * in theory this shouldn't be necessary but as long as DSACK
  	 * code can come after this skb later on it's better to keep
-@@ -3798,6 +3814,7 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
+@@ -3800,6 +3816,7 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
  
  	prior_fack = tcp_is_sack(tp) ? tcp_highest_sack_seq(tp) : tp->snd_una;
  	rs.prior_in_flight = tcp_packets_in_flight(tp);
@@ -3110,7 +3110,7 @@ index 07dbcbae7..e3fdd1ace 100644
  
  	/* ts_recent update must be made after we are sure that the packet
  	 * is in window.
-@@ -3896,6 +3913,7 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
+@@ -3898,6 +3915,7 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
  	delivered = tcp_newly_delivered(sk, delivered, flag);
  	lost = tp->lost - lost;			/* freshly marked lost */
  	rs.is_ack_delayed = !!(flag & FLAG_ACK_MAYBE_DELAYED);
@@ -3118,7 +3118,7 @@ index 07dbcbae7..e3fdd1ace 100644
  	tcp_rate_gen(sk, delivered, lost, is_sack_reneg, sack_state.rate);
  	tcp_cong_control(sk, ack, delivered, flag, sack_state.rate);
  	tcp_xmit_recovery(sk, rexmit);
-@@ -5497,13 +5515,14 @@ static void __tcp_ack_snd_check(struct sock *sk, int ofo_possible)
+@@ -5499,13 +5517,14 @@ static void __tcp_ack_snd_check(struct sock *sk, int ofo_possible)
  
  	    /* More than one full frame received... */
  	if (((tp->rcv_nxt - tp->rcv_wup) > inet_csk(sk)->icsk_ack.rcv_mss &&
@@ -3136,10 +3136,10 @@ index 07dbcbae7..e3fdd1ace 100644
  	    tcp_in_quickack_mode(sk) ||
  	    /* Protocol state mandates a one-time immediate ACK */
 diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index c38e07b50..97b687981 100644
+index 4c376b6d8..cd004cfba 100644
 --- a/net/ipv4/tcp_output.c
 +++ b/net/ipv4/tcp_output.c
-@@ -378,7 +378,8 @@ static void tcp_ecn_send(struct sock *sk, struct sk_buff *skb,
+@@ -375,7 +375,8 @@ static void tcp_ecn_send(struct sock *sk, struct sk_buff *skb,
  				th->cwr = 1;
  				skb_shinfo(skb)->gso_type |= SKB_GSO_TCP_ECN;
  			}
@@ -3149,7 +3149,7 @@ index c38e07b50..97b687981 100644
  			/* ACK or retransmitted segment: clear ECT|CE */
  			INET_ECN_dontxmit(sk);
  		}
-@@ -1536,7 +1537,7 @@ int tcp_fragment(struct sock *sk, enum tcp_queue tcp_queue,
+@@ -1533,7 +1534,7 @@ int tcp_fragment(struct sock *sk, enum tcp_queue tcp_queue,
  {
  	struct tcp_sock *tp = tcp_sk(sk);
  	struct sk_buff *buff;
@@ -3158,7 +3158,7 @@ index c38e07b50..97b687981 100644
  	long limit;
  	int nlen;
  	u8 flags;
-@@ -1613,6 +1614,15 @@ int tcp_fragment(struct sock *sk, enum tcp_queue tcp_queue,
+@@ -1610,6 +1611,15 @@ int tcp_fragment(struct sock *sk, enum tcp_queue tcp_queue,
  
  		if (diff)
  			tcp_adjust_pcount(sk, skb, diff);
@@ -3174,7 +3174,7 @@ index c38e07b50..97b687981 100644
  	}
  
  	/* Link BUFF into the send queue. */
-@@ -1991,13 +2001,12 @@ static u32 tcp_tso_autosize(const struct sock *sk, unsigned int mss_now,
+@@ -1988,13 +1998,12 @@ static u32 tcp_tso_autosize(const struct sock *sk, unsigned int mss_now,
  static u32 tcp_tso_segs(struct sock *sk, unsigned int mss_now)
  {
  	const struct tcp_congestion_ops *ca_ops = inet_csk(sk)->icsk_ca_ops;
@@ -3182,7 +3182,7 @@ index c38e07b50..97b687981 100644
 -
 -	min_tso = ca_ops->min_tso_segs ?
 -			ca_ops->min_tso_segs(sk) :
--			sock_net(sk)->ipv4.sysctl_tcp_min_tso_segs;
+-			READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_min_tso_segs);
 +	u32 tso_segs;
  
 -	tso_segs = tcp_tso_autosize(sk, mss_now, min_tso);
@@ -3193,7 +3193,7 @@ index c38e07b50..97b687981 100644
  	return min_t(u32, tso_segs, sk->sk_gso_max_segs);
  }
  
-@@ -2633,6 +2642,7 @@ static bool tcp_write_xmit(struct sock *sk, unsigned int mss_now, int nonagle,
+@@ -2630,6 +2639,7 @@ static bool tcp_write_xmit(struct sock *sk, unsigned int mss_now, int nonagle,
  			skb_set_delivery_time(skb, tp->tcp_wstamp_ns, true);
  			list_move_tail(&skb->tcp_tsorted_anchor, &tp->tsorted_sent_queue);
  			tcp_init_tso_segs(skb, mss_now);

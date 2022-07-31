@@ -1,4 +1,4 @@
-From 047f89c82bc652b3cf161df98cdd24c8324c3a4d Mon Sep 17 00:00:00 2001
+From b0ebaf7fb779197ee6b378b240b14fa870623429 Mon Sep 17 00:00:00 2001
 From: Francisco Boni Neto <boboniboni@gmail.com>
 Date: Fri, 22 Jul 2022 17:17:18 -0300
 Subject: [PATCH 36/38] novector
@@ -8,10 +8,10 @@ Subject: [PATCH 36/38] novector
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 9e6094b9e..88fb23c71 100644
+index ad47a4698..e802d321f 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
-@@ -66,7 +66,7 @@ export BITS
+@@ -67,7 +67,7 @@ export BITS
  #
  #    https://gcc.gnu.org/bugzilla/show_bug.cgi?id=53383
  #
